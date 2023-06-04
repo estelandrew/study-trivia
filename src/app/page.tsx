@@ -1,10 +1,21 @@
-import Image from 'next/image'
-import styles from './page.module.css'
+import PageSection from "@components/PageSection/PageSection";
+import Search from "@components/Search/Search";
+import Flashcard from "@components/Flashcard/Flashcard";
+import BrowseGrid from "@components/BrowseGrid/BrowseGrid";
+import styles from "./page.module.scss";
 
 export default function Home() {
   return (
     <main className={styles.main}>
-      <div style={{marginTop: '25rem', textAlign: 'center'}}>This is my page.</div>
+      <PageSection headerText="What do you want to study?">
+        <Search />
+      </PageSection>
+      <PageSection headerText="Browse">
+        <BrowseGrid />
+      </PageSection>
+      <PageSection headerText="Random">
+        <Flashcard />
+      </PageSection>
     </main>
-  )
+  );
 }

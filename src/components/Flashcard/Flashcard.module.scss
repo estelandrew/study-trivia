@@ -1,0 +1,15 @@
+.container {
+  width: 475px;
+  margin: 0 auto;
+}
+
+.edge {
+  height: 0.66rem;
+  border-radius: var(--border-radius) var(--border-radius) 0 0;
+}
+
+.mainArea {
+  background-color: var(--color-gray-background);
+  min-height: 250px;
+  border-radius: 0 0 var(--border-radius) var(--border-radius);
+}

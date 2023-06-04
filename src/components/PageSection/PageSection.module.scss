@@ -1,0 +1,17 @@
+@import "../../styles/mixins";
+
+.container {
+  width: 100%;
+  text-align: center;
+}
+
+.header {
+  margin: 3.5rem 0 2rem 0;
+  font-size: 1.33rem;
+  @include media-min-tablet-portrait {
+    font-size: 1.75rem;
+  }
+  @include media-min-desktop {
+    font-size: 2rem;
+  }
+}

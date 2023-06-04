@@ -3,10 +3,11 @@
 .container {
   font-size: 1rem;
   @include media-min-tablet-landscape {
-    font-size: 2rem;
+    font-size: 1rem;
   }
   svg {
-    font-size: 2rem;
+    font-size: 1.5rem;
+    font-weight: 400;
   }
   position: relative;
 }
@@ -63,10 +64,8 @@
     display: inline-block;
     width: 33vw;
     text-align: center;
-    font-weight: 700;
     @include media-min-tablet-landscape {
       width: 33%;
-      font-size: 1.5rem;
     }
   }
 

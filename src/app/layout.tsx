@@ -1,7 +1,7 @@
 import "./globals.css";
 import { Rubik } from "next/font/google";
 import Header from "../components/Header/Header";
-import styles from "./page.module.css";
+import styles from "./page.module.scss";
 
 const roboto_mono = Rubik({ subsets: ["latin"] });
 
