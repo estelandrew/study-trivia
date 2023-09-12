@@ -11,12 +11,13 @@
   --color-gray-background: #696c77;
 
   --color-gray-background: #737373;
+  --color-purple-background: #3a3266;
 
   --border-radius: 8px;
 }
 
 body {
-  background-color: #090040;
+  background-color: #040020;
   width: 90%;
   margin: 2rem auto;
   color: #fff;
@@ -45,6 +46,6 @@ body {
   background-color: var(--color-red);
 }
 
-.artsLit {
+.arts-and-literature {
   background-color: var(--color-purple);
 }

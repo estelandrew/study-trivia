@@ -3,7 +3,8 @@
 .container {
   font-size: 1rem;
   @include media-min-tablet-landscape {
-    font-size: 1rem;
+    font-size: 1.125rem;
+    font-weight: 700;
   }
   svg {
     font-size: 1.5rem;
@@ -23,7 +24,6 @@
   border-radius: 50%;
   &:hover {
     cursor: pointer;
-    background-color: var(--color-purple-tinted);
     transition: 200ms;
     svg {
       opacity: 1;
@@ -70,7 +70,7 @@
   }
 
   a {
-    color: #fff;
+    color: #ecdaec;
     text-decoration: none;
   }
 }

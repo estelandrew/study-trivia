@@ -1,31 +1,28 @@
 import styles from "./BrowseGrid.module.scss";
 import { Rubik } from "next/font/google";
+import supabase from "../../../utils/supabase";
+import { slugifyCategoryName } from "../../lib/helpers";
 
 const rubik = Rubik({ subsets: ["latin"] });
 
-const BrowseGrid = () => {
+export const revalidate = 0;
+
+const BrowseGrid = async () => {
+  const { data: posts } = await supabase.from("categories").select();
   return (
     <div className={`${styles.container} ${rubik.className}`}>
-      <div className={`${styles.card} history`}>
-        <span className={styles.cardText}>History</span>
-      </div>
-      <div className={`${styles.card} science`}>
-        <span className={styles.cardText}>Science</span>
-      </div>
-      <div className={`${styles.card} geography`}>
-        <span className={styles.cardText}>Geography</span>
-      </div>
-      <div className={`${styles.card} entertainment`}>
-        <span className={styles.cardText}>Entertainment</span>
-      </div>
-      <div className={`${styles.card} sports`}>
-        <span className={styles.cardText}>Sports</span>
-      </div>
-      <div className={`${styles.card} artsLit`}>
-        <span className={styles.cardText}>Arts & Literature</span>
-      </div>
+      {posts?.map((category) => {
+        let categoryStyle = slugifyCategoryName(category.name);
+        return (
+          <div key={category.id} className={`${styles.card} ${categoryStyle}`}>
+            <span className={styles.cardText}>{category.name}</span>
+          </div>
+        );
+      })}
     </div>
   );
+
+  // return <pre>{JSON.stringify(posts, null, 2)}</pre>;
 };
 
 export default BrowseGrid;

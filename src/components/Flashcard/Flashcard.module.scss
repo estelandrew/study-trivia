@@ -1,6 +1,10 @@
 .container {
-  width: 475px;
+  max-width: 29.875rem;
   margin: 0 auto;
+  position: relative;
+  a {
+    color: #ecdaec;
+  }
 }
 
 .edge {
@@ -9,7 +13,20 @@
 }
 
 .mainArea {
-  background-color: var(--color-gray-background);
+  background-color: var(--color-purple-background);
   min-height: 250px;
   border-radius: 0 0 var(--border-radius) var(--border-radius);
+}
+
+.breadcrumbs {
+  text-align: left;
+  padding: 1rem;
+}
+
+.mainText {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 95%;
 }
