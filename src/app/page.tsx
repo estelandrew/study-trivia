@@ -1,7 +1,7 @@
 import PageSection from "@components/PageSection/PageSection";
 import Search from "@components/Search/Search";
 import Flashcard from "@components/Flashcard/Flashcard";
-import BrowseGrid from "@components/BrowseGrid/BrowseGrid";
+import CategoriesGrid from "@components/CategoriesGrid/CategoriesGrid";
 import styles from "./page.module.scss";
 
 export default function Home() {
@@ -10,11 +10,11 @@ export default function Home() {
       <PageSection headerText="What do you want to study?">
         <Search />
       </PageSection>
-      <PageSection headerText="Browse">
-        <BrowseGrid />
+      <PageSection headerText="Categories">
+        <CategoriesGrid />
       </PageSection>
       <PageSection headerText="Random">
-        <Flashcard />
+        <Flashcard showBreadcrumbs={true} />
       </PageSection>
     </main>
   );

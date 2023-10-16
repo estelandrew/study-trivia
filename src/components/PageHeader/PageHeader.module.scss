@@ -1,0 +1,48 @@
+@import "../../styles/mixins";
+
+.container {
+  padding: 1rem 0;
+  margin: 3.5rem 0 0 0;
+  font-size: 1.33rem;
+  // border-bottom: 8px solid white;
+
+  // &.geography {
+  //   border-color: var(--color-blue);
+  // }
+
+  // &.history {
+  //   border-color: var(--color-yellow);
+  // }
+
+  // &.science {
+  //   border-color: var(--color-green);
+  // }
+
+  // &.entertainment {
+  //   border-color: var(--color-teal);
+  // }
+
+  // &.sports {
+  //   border-color: var(--color-red);
+  // }
+
+  // &.arts-and-literature {
+  //   border-color: var(--color-purple);
+  // }
+
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.text {
+  font-size: 1.33rem;
+  color: #ecdaec;
+  @include media-min-tablet-portrait {
+    font-size: 1.75rem;
+  }
+  @include media-min-desktop {
+    font-size: 2rem;
+  }
+}

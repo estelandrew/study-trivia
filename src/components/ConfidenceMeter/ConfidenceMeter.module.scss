@@ -1,0 +1,120 @@
+@import "../../styles/mixins.scss";
+
+.container {
+  margin-top: 2rem;
+  display: flex;
+  height: 0.8rem;
+  align-items: baseline;
+  padding-bottom: 0.5rem;
+
+  @include media-min-tablet-portrait {
+    margin-top: 0;
+  }
+}
+
+.label {
+  width: 5rem;
+  font-size: 0.75rem;
+
+  @include media-min-tablet-portrait {
+    display: none;
+  }
+}
+
+.notchWrapper {
+  width: 1rem;
+}
+
+.notch {
+  width: 0.5rem;
+  height: 0.75rem;
+  border: 1.5px solid #ddd;
+  cursor: pointer;
+}
+
+.notchLow {
+  height: 0.75rem;
+}
+
+.notchMedium {
+  height: 1.125rem;
+}
+
+.notchHigh {
+  height: 1.5rem;
+}
+
+.low {
+  .notchLow {
+    background-color: #e21a1a;
+    border: 1.5px solid transparent;
+    opacity: 1;
+  }
+
+  &-temp {
+    .notchLow {
+      background-color: #e21a1a;
+      opacity: 0.75;
+    }
+
+    &.selected {
+      .notchLow {
+        border: 1.5px solid transparent;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.medium {
+  .notchLow,
+  .notchMedium {
+    background-color: #ee983e;
+    border: 1.5px solid transparent;
+    opacity: 1;
+  }
+
+  &-temp {
+    .notchLow,
+    .notchMedium {
+      background-color: #ee983e;
+      opacity: 0.75;
+    }
+
+    &.selected {
+      .notchLow,
+      .notchMedium {
+        border: 1.5px solid transparent;
+        opacity: 1;
+      }
+    }
+  }
+}
+
+.high {
+  .notchLow,
+  .notchMedium,
+  .notchHigh {
+    background-color: #00b200;
+    border: 1.5px solid transparent;
+    opacity: 1;
+  }
+
+  &-temp {
+    .notchLow,
+    .notchMedium,
+    .notchHigh {
+      background-color: #00b200;
+      opacity: 0.75;
+    }
+
+    &.selected {
+      .notchLow,
+      .notchMedium,
+      .notchHigh {
+        border: 1.5px solid transparent;
+        opacity: 1;
+      }
+    }
+  }
+}

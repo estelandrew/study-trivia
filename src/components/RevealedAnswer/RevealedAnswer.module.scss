@@ -1,0 +1,28 @@
+@import "../../styles/mixins.scss";
+
+.container {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1.375rem 1fr;
+  position: relative;
+}
+
+.resetButton {
+  @include media-min-tablet-portrait {
+    position: absolute;
+    top: 50%;
+    left: 1.5rem;
+    transform: translateY(-50%);
+  }
+}
+
+.answer {
+  padding-left: 0.75rem;
+
+  @include media-min-tablet-portrait {
+    position: absolute;
+    top: 50%;
+    left: 2.75rem;
+    transform: translateY(-50%);
+  }
+}

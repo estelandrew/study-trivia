@@ -1,0 +1,23 @@
+@import "../../styles/mixins.scss";
+
+.revealButtonContainer {
+  cursor: pointer;
+  position: relative;
+}
+
+.revealButton {
+  display: inline-block;
+  font-weight: 700;
+  line-height: normal;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+
+  @include media-min-tablet-portrait {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1.5rem;
+    cursor: pointer;
+  }
+}

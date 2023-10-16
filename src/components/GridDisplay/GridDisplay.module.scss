@@ -1,0 +1,79 @@
+@import "../../styles/mixins.scss";
+
+.container {
+  width: 100%;
+  //margin-left: -5.5%;
+
+  @include media-min-tablet-portrait {
+    width: 100%;
+    margin: 0 auto;
+  }
+}
+
+.headerRow {
+  height: 2.5rem;
+}
+
+.row {
+  min-height: 8rem;
+
+  @include media-min-tablet-portrait {
+    min-height: 2.5rem;
+  }
+}
+
+.row,
+.headerRow {
+  box-sizing: border-box;
+  font-size: 1rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  min-width: none;
+  padding: 1rem 0;
+
+  @include media-min-tablet-portrait {
+    grid-template-columns: 1fr 1fr 12rem;
+  }
+
+  & > div {
+    padding: 0 1rem;
+
+    @include media-min-tablet-portrait {
+      padding-left: 2rem;
+    }
+  }
+}
+
+.headerRow {
+  font-weight: 700;
+}
+
+.headerRow > div:nth-child(3) {
+  display: none;
+
+  @include media-min-tablet-portrait {
+    display: block;
+  }
+}
+
+.row:nth-child(even) {
+  background-color: var(--color-card-main);
+}
+
+.row:nth-child(odd) {
+  background-color: #4d4675;
+}
+
+.confidenceMeter {
+  grid-row-start: 2;
+  grid-row-end: 3;
+  grid-column-start: 1;
+  grid-column-end: 3;
+
+  @include media-min-tablet-portrait {
+    grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 3;
+    grid-column-end: 3;
+  }
+}

@@ -3,7 +3,7 @@ import { Rubik } from "next/font/google";
 import Header from "../components/Header/Header";
 import styles from "./page.module.scss";
 
-const roboto_mono = Rubik({ subsets: ["latin"] });
+const rubik = Rubik({ subsets: ["latin"] });
 
 export const metadata = {
   title: "Home | Study Trivia",
@@ -17,7 +17,7 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className={roboto_mono.className}>
+      <body className={rubik.className}>
         <header>
           <Header />
         </header>
