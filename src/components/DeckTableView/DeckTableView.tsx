@@ -1,6 +1,6 @@
 "use client";
 import { DeckDataType } from "../../../types";
-import styles from "./GridDisplay.module.scss";
+import styles from "./DeckTableView.module.scss";
 import { useDisplayCards } from "../../hooks/useDisplayCards";
 import { RevealedAnswer } from "../RevealedAnswer/RevealedAnswer";
 import { RevealAnswerButton } from "../RevealAnswerButton/RevealAnswerButton";
@@ -10,13 +10,16 @@ interface GridDisplayPropsType {
   deckData: DeckDataType;
 }
 
-export const GridDisplay = ({ deckData }: GridDisplayPropsType) => {
-  const { cards, updateCardIsRevealed } = useDisplayCards(deckData.cards);
-
+const DeckTableView = ({ deckData }: GridDisplayPropsType) => {
+  const {
+    categories: { slug },
+    cards: fetchedCards,
+  } = deckData || {};
+  const { cards, updateCardIsRevealed } = useDisplayCards(fetchedCards);
   return (
     <>
       <div className={styles.container}>
-        <div className={`${styles.headerRow} ${deckData.categories.slug}`}>
+        <div className={`${styles.headerRow} ${slug}`}>
           <div>Clue</div>
           <div>Answer</div>
           <div>Confidence</div>
@@ -30,11 +33,11 @@ export const GridDisplay = ({ deckData }: GridDisplayPropsType) => {
                   card={card}
                   i={i}
                   updateCardIsRevealed={updateCardIsRevealed}
-                  slug={deckData.categories.slug}
+                  slug={slug}
                 />
               ) : (
                 <RevealAnswerButton
-                  slug={deckData.categories.slug}
+                  slug={slug}
                   i={i}
                   updateCardIsRevealed={updateCardIsRevealed}
                 />
@@ -49,3 +52,5 @@ export const GridDisplay = ({ deckData }: GridDisplayPropsType) => {
     </>
   );
 };
+
+export default DeckTableView;
