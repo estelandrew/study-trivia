@@ -13,7 +13,7 @@ export const PageHeader = ({ text, description, categorySlug }: Props) => {
   return (
     <div className={`${styles.container} ${styles[`${categorySlug}`]}`}>
       <h3 className={`${luckiestGuy.className} ${styles.text}`}>{text}</h3>
-      {description && <div>{description}</div>}
+      {description && <div className={styles.description}>{description}</div>}
     </div>
   );
 };

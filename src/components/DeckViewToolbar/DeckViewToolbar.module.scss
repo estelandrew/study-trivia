@@ -1,0 +1,22 @@
+.toolbar {
+  margin: 1rem 0;
+}
+
+.viewControlItem {
+  height: 2rem;
+  line-height: 2rem;
+  cursor: pointer;
+  border-radius: 8px;
+
+  & > div {
+    display: inline-block;
+  }
+
+  &:hover {
+    background-color: #3a3266;
+  }
+}
+
+.viewControlItemCheckPlaceholder {
+  width: 2rem;
+}

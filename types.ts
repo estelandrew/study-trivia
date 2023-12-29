@@ -1,13 +1,22 @@
+{
+  /* TODO: figure out if way to not allow null to be returned */
+}
 export type DeckDataType = {
-  id: string;
-  slug: string;
-  name: string;
-  description: string;
-  categories: {
-    slug: string;
-  };
-  cards: CardDataType[];
-};
+  id: any;
+  slug: any;
+  name: any;
+  description: any;
+  categories:
+    | {
+        slug: any;
+      }[]
+    | any;
+  cards: {
+    id: any;
+    clue: any;
+    answer: any;
+  }[];
+} | null;
 
 export type CardDataType = {
   id: string;
@@ -21,3 +30,8 @@ export type CardUIFieldsType = {
 };
 
 export type DisplayCardType = CardDataType & CardUIFieldsType;
+
+export enum DeckViews {
+  Cards = "cards",
+  Table = "table",
+}

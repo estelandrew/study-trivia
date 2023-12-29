@@ -2,12 +2,12 @@ import { useState } from "react";
 import { CardDataType, DisplayCardType } from "../../types";
 import { getConfidenceLevelStorage } from "@lib/localStorage";
 
-export const useDisplayCards = (cardsFromDeck: CardDataType[]) => {
+export const useDisplayCards = (cardsFromDeck: CardDataType[] | undefined) => {
   const confidenceLevelsFromStorage = getConfidenceLevelStorage();
 
   const constructCardsWithAdditionalProps = () => {
     const cards: DisplayCardType[] = [];
-    cardsFromDeck.forEach((cardFromDeck) => {
+    cardsFromDeck?.forEach((cardFromDeck) => {
       let index;
       if (confidenceLevelsFromStorage) {
         index = confidenceLevelsFromStorage.findIndex(

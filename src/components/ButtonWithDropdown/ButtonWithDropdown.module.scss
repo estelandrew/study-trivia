@@ -1,0 +1,36 @@
+.container {
+  position: relative;
+  display: inline-block;
+  border: 3px solid transparent;
+}
+
+.buttonContainer {
+  //border: 1px solid #756f93;
+  display: inline-block;
+  padding: 0.5rem 1rem;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: #3a3266;
+
+  &:hover {
+    background: #4d4675;
+  }
+}
+
+.dropdownContainer {
+  width: 12rem;
+  background-color: var(--color-site-background-tinted);
+  color: #fff;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  position: absolute;
+  top: 2.75rem;
+}
+
+.hidden {
+  display: none;
+}
+
+.visible {
+  display: block;
+}

@@ -10,12 +10,14 @@
   --color-gray-background: #737373;
   --color-card-main: #3a3266;
   --color-card-tinted: #756f93;
+  --color-site-background: #040020;
+  --color-site-background-tinted: #1d1936;
 
   --border-radius: 8px;
 }
 
 body {
-  background-color: #040020;
+  background-color: var(--color-site-background);
   width: 90%;
   margin: 2rem auto;
   color: #fff;
