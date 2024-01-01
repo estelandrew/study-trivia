@@ -60,9 +60,6 @@ export const ConfidenceMeter = ({ card }: PropsType) => {
         ]
       }`}
     >
-      <div className={styles.label}>
-        <i>Confidence:</i>
-      </div>
       <div
         id="notch-1"
         className={styles.notchWrapper}

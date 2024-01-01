@@ -19,29 +19,31 @@ const DeckTableView = ({ deckData }: GridDisplayPropsType) => {
   return (
     <>
       <div className={styles.container}>
-        <div className={`${styles.headerRow} ${slug}`}>
+        <div className={`${styles.headerRow}`}>
           <div>Clue</div>
-          <div>Answer</div>
+          <div></div>
           <div>Confidence</div>
         </div>
         {cards.map((card, i) => {
           return (
             <div className={styles.row} key={card.id}>
               <div className={styles.clue}>{card.clue}</div>
-              {card.isRevealed ? (
-                <RevealedAnswer
-                  card={card}
-                  i={i}
-                  updateCardIsRevealed={updateCardIsRevealed}
-                  slug={slug}
-                />
-              ) : (
-                <RevealAnswerButton
-                  slug={slug}
-                  i={i}
-                  updateCardIsRevealed={updateCardIsRevealed}
-                />
-              )}
+              <div className={styles.answer}>
+                {card.isRevealed ? (
+                  <RevealedAnswer
+                    card={card}
+                    i={i}
+                    updateCardIsRevealed={updateCardIsRevealed}
+                    slug={slug}
+                  />
+                ) : (
+                  <RevealAnswerButton
+                    slug={slug}
+                    i={i}
+                    updateCardIsRevealed={updateCardIsRevealed}
+                  />
+                )}
+              </div>
               <div className={styles.confidenceMeter}>
                 <ConfidenceMeter card={card} />
               </div>

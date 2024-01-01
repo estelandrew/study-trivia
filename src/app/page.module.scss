@@ -6,10 +6,6 @@
   width: 100%;
   max-width: 75rem;
 
-  @include media-min-tablet-landscape {
-    width: 66.67%;
-  }
-
   @include media-min-desktop {
     width: 83.333%;
   }

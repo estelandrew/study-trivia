@@ -2,7 +2,6 @@
 
 .container {
   width: 100%;
-  //margin-left: -5.5%;
 
   @include media-min-tablet-portrait {
     width: 100%;
@@ -27,9 +26,13 @@
   box-sizing: border-box;
   font-size: 1rem;
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: 1fr 8rem;
   min-width: none;
   padding: 1rem 0;
+  background-color: var(--color-table-blue);
+  color: #fff;
+  align-items: center;
+  justify-content: middle;
 
   @include media-min-tablet-portrait {
     grid-template-columns: 1fr 1fr 12rem;
@@ -48,7 +51,7 @@
   font-weight: 700;
 }
 
-.headerRow > div:nth-child(3) {
+.headerRow > div:nth-child(2) {
   display: none;
 
   @include media-min-tablet-portrait {
@@ -64,10 +67,34 @@
   background-color: #4d4675;
 }
 
-.confidenceMeter {
-  grid-row-start: 2;
-  grid-row-end: 3;
+.clue {
+  grid-row-start: 1;
+  grid-row-end: 2;
   grid-column-start: 1;
+  grid-column-end: 2;
+}
+
+.answer {
+  margin-top: 1rem;
+  grid-row-start: 2;
+  grid-row-end: 2;
+  grid-column-start: 1;
+  grid-column-end: 2;
+
+  @include media-min-tablet-portrait {
+    margin-top: 0;
+    grid-row-start: 1;
+    grid-row-end: 1;
+    grid-column-start: 2;
+    grid-column-end: 3;
+  }
+}
+
+.confidenceMeter {
+  justify-content: end;
+  grid-row-start: 1;
+  grid-row-end: 2;
+  grid-column-start: 2;
   grid-column-end: 3;
 
   @include media-min-tablet-portrait {
