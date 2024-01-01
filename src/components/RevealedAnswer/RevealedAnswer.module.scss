@@ -11,15 +11,15 @@
   @include media-min-tablet-portrait {
     position: absolute;
     top: 50%;
-    left: 1.5rem;
     transform: translateY(-50%);
   }
 }
 
 .answer {
   padding-left: 0.75rem;
-
+  font-weight: 700;
   @include media-min-tablet-portrait {
+    padding-left: 0;
     position: absolute;
     top: 50%;
     left: 2.75rem;

@@ -17,7 +17,7 @@ export const RevealedAnswer = ({
   return (
     <div className={styles.container} onClick={() => updateCardIsRevealed(i)}>
       <div className={styles.resetButton}>
-        <IconButton slug={slug} Icon={<FaUndoAlt />} />
+        <IconButton Icon={<FaUndoAlt />} />
       </div>
       <div className={styles.answer}>{card.answer}</div>
     </div>

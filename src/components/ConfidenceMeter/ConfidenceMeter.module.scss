@@ -1,23 +1,15 @@
 @import "../../styles/mixins.scss";
 
 .container {
-  margin-top: 2rem;
   display: flex;
   height: 0.8rem;
   align-items: baseline;
+  justify-content: center;
   padding-bottom: 0.5rem;
 
-  @include media-min-tablet-portrait {
+  @include media-min-desktop {
     margin-top: 0;
-  }
-}
-
-.label {
-  width: 5rem;
-  font-size: 0.75rem;
-
-  @include media-min-tablet-portrait {
-    display: none;
+    justify-content: start;
   }
 }
 

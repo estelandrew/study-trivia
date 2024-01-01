@@ -15,7 +15,7 @@ export const RevealAnswerButton = ({
       className={styles.revealButtonContainer}
       onClick={() => updateCardIsRevealed(i)}
     >
-      <div className={`${styles.revealButton} ${slug}`}>Reveal</div>
+      <div className={`${styles.revealButton} ${slug}`}>Reveal Answer</div>
     </div>
   );
 };

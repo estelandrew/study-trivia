@@ -12,12 +12,8 @@
   padding: 0.25rem 0.5rem;
   border-radius: 8px;
   cursor: pointer;
-
-  @include media-min-tablet-portrait {
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    left: 1.5rem;
-    cursor: pointer;
-  }
+  background-color: var(--color-table-blue);
+  color: #fff;
+  width: 8rem;
+  text-align: center;
 }
