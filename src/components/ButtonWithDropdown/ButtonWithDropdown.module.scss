@@ -2,29 +2,36 @@
   position: relative;
   display: inline-block;
   border: 3px solid transparent;
+  z-index: 999;
 }
 
 .buttonContainer {
   //border: 1px solid #756f93;
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
   background-color: #3a3266;
-
+  text-align: center;
   &:hover {
     background: #4d4675;
+  }
+
+  svg {
+    display: block;
   }
 }
 
 .dropdownContainer {
-  width: 12rem;
+  min-width: 11rem;
+  width: auto;
   background-color: var(--color-site-background-tinted);
   color: #fff;
-  padding: 0.25rem 0.5rem;
+  padding: 1rem;
   border-radius: 8px;
   position: absolute;
   top: 2.75rem;
+  //padding: 0.5rem;
 }
 
 .hidden {
