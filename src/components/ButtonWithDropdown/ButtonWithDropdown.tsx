@@ -1,18 +1,11 @@
 import { ReactNode, useRef, useState, useEffect } from "react";
 import styles from "./ButtonWithDropdown.module.scss";
 import { IconType } from "react-icons";
-import { MdExpandMore } from "react-icons/md";
-import { MdExpandLess } from "react-icons/md";
-import { DeckViews } from "@root/types";
 
 type PropsType = {
-  text: string;
   icon: IconType;
-  label: string;
+  label?: string;
   children: ReactNode;
-  currentView: {
-    type: DeckViews;
-  };
 };
 
 enum DropDownStates {
@@ -20,13 +13,7 @@ enum DropDownStates {
   Hidden = "hidden",
 }
 
-const ButtonWithDropdown = ({
-  text,
-  icon: Icon,
-  children,
-  label,
-  currentView,
-}: PropsType) => {
+const ButtonWithDropdown = ({ icon: Icon, children, label }: PropsType) => {
   const dropDownContainer = useRef<HTMLDivElement>(null);
   const [dropDownState, setDropdownState] = useState<DropDownStates>(
     DropDownStates.Hidden
@@ -34,7 +21,7 @@ const ButtonWithDropdown = ({
 
   useEffect(() => {
     setDropdownState(DropDownStates.Hidden);
-  }, [currentView]);
+  }, []);
 
   useEffect(() => {
     if (dropDownState === DropDownStates.Hidden) {
@@ -67,13 +54,8 @@ const ButtonWithDropdown = ({
   return (
     <div className={styles.container}>
       <div className={styles.buttonContainer} onClick={toggleDropdown}>
-        <Icon /> &nbsp;
-        {label}&nbsp;
-        {dropDownState === DropDownStates.Hidden ? (
-          <MdExpandMore />
-        ) : (
-          <MdExpandLess />
-        )}
+        <Icon />
+        {label}
       </div>
       <div
         ref={dropDownContainer}
