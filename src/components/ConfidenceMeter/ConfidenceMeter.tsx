@@ -1,19 +1,39 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import styles from "./ConfidenceMeter.module.scss";
-import { DisplayCardType } from "../../../types";
+import { CardDataType } from "../../../types";
 import { updateConfidenceLevelStorage } from "@lib/localStorage";
+import { ConfidenceLevelStorageType } from "../../../types";
 
 type PropsType = {
-  card: DisplayCardType;
+  cardId: string;
+  confidenceLevelStorage: ConfidenceLevelStorageType;
 };
 
-export const ConfidenceMeter = ({ card }: PropsType) => {
-  const { id, confidenceLevel } = card;
-  const [currentConfidenceLevel, setCurrentConfidenceLevel] =
-    useState<string>(confidenceLevel);
+export const ConfidenceMeter = ({
+  cardId,
+  confidenceLevelStorage,
+}: PropsType) => {
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+
+  const [currentConfidenceLevel, setCurrentConfidenceLevel] = useState<
+    string | null
+  >(null);
   const [tempConfidenceLevel, setTempConfidenceLevel] = useState<string>("");
+
+  useEffect(() => {
+    if (confidenceLevelStorage && confidenceLevelStorage.length) {
+      const index = confidenceLevelStorage.findIndex(
+        (item) => item.id === cardId
+      );
+      if (index !== -1) {
+        const item = confidenceLevelStorage[index];
+        setCurrentConfidenceLevel(item.value);
+      }
+    }
+    setIsLoading(false);
+  }, [confidenceLevelStorage, cardId]);
 
   const handleOnMouseOver = (level: string) => {
     setTempConfidenceLevel(level);
@@ -44,13 +64,13 @@ export const ConfidenceMeter = ({ card }: PropsType) => {
         newConfidenceLevel = "default";
     }
     theDiv.parentElement?.classList.add(styles["selected"]);
-    updateConfidenceLevelStorage(id, newConfidenceLevel);
+    updateConfidenceLevelStorage(cardId, newConfidenceLevel);
     setCurrentConfidenceLevel(newConfidenceLevel);
   };
 
   return (
     <div
-      className={`${styles.container} ${
+      className={`${styles.container} ${isLoading && styles.loading} ${
         styles[
           `${
             tempConfidenceLevel
@@ -62,30 +82,33 @@ export const ConfidenceMeter = ({ card }: PropsType) => {
     >
       <div
         id="notch-1"
-        className={styles.notchWrapper}
+        className={`${styles.notchWrapper} ${styles.notchWrapperLow}`}
         onMouseOver={() => handleOnMouseOver("low-temp")}
         onMouseLeave={(e) => handleOnMouseLeave(e)}
         onClick={(e) => handleNotchClick(e)}
       >
         <div className={`${styles.notch} ${styles.notchLow}`}></div>
+        <div className={styles.loadingAnimation}></div>
       </div>
       <div
         id="notch-2"
-        className={styles.notchWrapper}
+        className={`${styles.notchWrapper} ${styles.notchWrapperMedium}`}
         onMouseOver={() => handleOnMouseOver("medium-temp")}
         onMouseLeave={(e) => handleOnMouseLeave(e)}
         onClick={(e) => handleNotchClick(e)}
       >
         <div className={`${styles.notch} ${styles.notchMedium}`}></div>
+        <div className={styles.loadingAnimation}></div>
       </div>
       <div
         id="notch-3"
-        className={styles.notchWrapper}
+        className={`${styles.notchWrapper} ${styles.notchWrapperHigh}`}
         onMouseOver={() => handleOnMouseOver("high-temp")}
         onMouseLeave={(e) => handleOnMouseLeave(e)}
         onClick={(e) => handleNotchClick(e)}
       >
         <div className={`${styles.notch} ${styles.notchHigh}`}></div>
+        <div className={styles.loadingAnimation}></div>
       </div>
     </div>
   );

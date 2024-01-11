@@ -4,12 +4,7 @@ import ButtonWithDropdown from "@components/ButtonWithDropdown/ButtonWithDropdow
 import { FaFilter } from "react-icons/fa";
 import { FilterDeckButton } from "@components/FilterDeckButton/FilterDeckButton";
 
-type PropsType = {
-  foo: string;
-  children: ReactNode;
-};
-
-const DeckViewToolbar = ({ foo, children }: PropsType) => {
+const DeckViewToolbar = () => {
   const Icon = FaFilter;
 
   return (
