@@ -1,0 +1,43 @@
+@import "../../styles/mixins.scss";
+
+.buttonContainer {
+  position: relative;
+  display: inline-block;
+  font-weight: 700;
+  line-height: normal;
+  padding: 0.25rem 0.5rem;
+  border-radius: 8px;
+  cursor: pointer;
+  background-color: var(--color-table-blue);
+  color: #fff;
+  width: 8rem;
+  text-align: center;
+}
+
+.answerContainer {
+  cursor: pointer;
+  display: grid;
+  grid-template-columns: 1.375rem 1fr;
+  position: relative;
+}
+
+.resetButton {
+  @include media-min-tablet-portrait {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+}
+
+.answer {
+  padding-left: 0.75rem;
+  font-weight: 700;
+  line-height: 1.5rem;
+  @include media-min-tablet-portrait {
+    padding-left: 0;
+    position: absolute;
+    top: 50%;
+    left: 2.75rem;
+    transform: translateY(-50%);
+  }
+}

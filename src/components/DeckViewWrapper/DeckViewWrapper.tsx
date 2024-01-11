@@ -17,7 +17,7 @@ const DeckViewWrapper = ({ data }: PropsType) => {
   const { currentView, toggleView } = useToolbar();
   return (
     <div className={styles.container}>
-      <DeckViewToolbar currentView={currentView} toggleView={toggleView} />
+      <DeckViewToolbar />
       {currentView.type === DeckViews.Cards && <DeckViewFlashcards />}
       {currentView.type === DeckViews.Table && (
         <DeckTableView deckData={data} />

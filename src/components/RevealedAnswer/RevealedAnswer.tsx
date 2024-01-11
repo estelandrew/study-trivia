@@ -1,5 +1,5 @@
 import { IconButton } from "@components/IconButton/IconButton";
-import { DisplayCardType } from "../../../types";
+import { CardDataType } from "../../../types";
 import { FaUndoAlt } from "react-icons/fa";
 import styles from "./RevealedAnswer.module.scss";
 
@@ -9,7 +9,7 @@ export const RevealedAnswer = ({
   updateCardIsRevealed,
   slug,
 }: {
-  card: DisplayCardType;
+  card: CardDataType;
   i: number;
   updateCardIsRevealed: (i: number) => void;
   slug: string;

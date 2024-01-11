@@ -110,3 +110,15 @@
     }
   }
 }
+
+//loading state
+.container.loading .notchWrapper {
+  position: relative;
+  overflow: hidden;
+}
+
+.container.loading .notchWrapper .notch {
+  background-color: #aaa;
+  border: 1.5px solid #aaa;
+  box-shadow: inset 0px 0px 10px 10px #aaa;
+}

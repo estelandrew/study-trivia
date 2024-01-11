@@ -6,11 +6,8 @@ export const getConfidenceLevelStorage = () => {
   return result;
 };
 
-export const updateConfidenceLevelStorage = (
-  id: string,
-  confidenceLevel: string
-) => {
-  let value = { id, confidenceLevel };
+export const updateConfidenceLevelStorage = (id: string, value: string) => {
+  let confidenceLevel = { id, value };
   let storage: object[] = [];
   // if confidence levels exist as local storage item, update accordingly; else create storage and set initial item
   if (localStorage.getItem("confidenceLevels")) {
@@ -28,11 +25,11 @@ export const updateConfidenceLevelStorage = (
       storage = [...result];
     } else {
       storage = [...result];
-      storage.push(value);
+      storage.push(confidenceLevel);
     }
     localStorage.setItem("confidenceLevels", JSON.stringify(storage));
   } else {
-    storage.push(value);
+    storage.push(confidenceLevel);
     localStorage.setItem("confidenceLevels", JSON.stringify(storage));
   }
 };

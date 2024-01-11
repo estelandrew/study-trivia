@@ -1,21 +1,34 @@
 "use client";
+import { useEffect, useState } from "react";
 import { DeckDataType } from "../../../types";
 import styles from "./DeckTableView.module.scss";
-import { useDisplayCards } from "../../hooks/useDisplayCards";
-import { RevealedAnswer } from "../RevealedAnswer/RevealedAnswer";
-import { RevealAnswerButton } from "../RevealAnswerButton/RevealAnswerButton";
+import CardAnswer from "@components/CardAnswer/CardAnswer";
 import { ConfidenceMeter } from "@components/ConfidenceMeter/ConfidenceMeter";
+import { CardDataType } from "../../../types";
+import { getConfidenceLevelStorage } from "@lib/localStorage";
+import { ConfidenceLevelStorageType } from "../../../types";
 
 interface GridDisplayPropsType {
   deckData: DeckDataType;
 }
 
 const DeckTableView = ({ deckData }: GridDisplayPropsType) => {
+  const [confidenceLevelStorage, setConfidenceLevelStorage] =
+    useState<ConfidenceLevelStorageType | null>(null);
+
+  useEffect(() => {
+    setConfidenceLevelStorage(getConfidenceLevelStorage());
+  }, []);
+
   const {
     categories: { slug },
-    cards: fetchedCards,
+    cards,
   } = deckData || {};
-  const { cards, updateCardIsRevealed } = useDisplayCards(fetchedCards);
+
+  const updateCardIsRevealed = () => {
+    console.log("reveal card");
+  };
+
   return (
     <>
       <div className={styles.container}>
@@ -24,28 +37,18 @@ const DeckTableView = ({ deckData }: GridDisplayPropsType) => {
           <div></div>
           <div>Confidence</div>
         </div>
-        {cards.map((card, i) => {
+        {cards?.map((card, i) => {
           return (
             <div className={styles.row} key={card.id}>
               <div className={styles.clue}>{card.clue}</div>
               <div className={styles.answer}>
-                {card.isRevealed ? (
-                  <RevealedAnswer
-                    card={card}
-                    i={i}
-                    updateCardIsRevealed={updateCardIsRevealed}
-                    slug={slug}
-                  />
-                ) : (
-                  <RevealAnswerButton
-                    slug={slug}
-                    i={i}
-                    updateCardIsRevealed={updateCardIsRevealed}
-                  />
-                )}
+                <CardAnswer answer={card.answer} />
               </div>
               <div className={styles.confidenceMeter}>
-                <ConfidenceMeter card={card} />
+                <ConfidenceMeter
+                  cardId={card.id}
+                  confidenceLevelStorage={confidenceLevelStorage}
+                />
               </div>
             </div>
           );

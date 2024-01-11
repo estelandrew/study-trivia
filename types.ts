@@ -35,3 +35,10 @@ export enum DeckViews {
   Cards = "cards",
   Table = "table",
 }
+
+export interface ConfidenceLevelType {
+  id: string;
+  value: string;
+}
+
+export type ConfidenceLevelStorageType = ConfidenceLevelType[] | null;
