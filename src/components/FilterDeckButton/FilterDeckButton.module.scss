@@ -6,3 +6,37 @@
 .filters {
   margin-bottom: 1rem;
 }
+
+.square {
+  width: 1rem;
+  height: 1rem;
+}
+
+.squareUnevaluated {
+  border: 1.5px solid #ddd;
+}
+
+.squareLow {
+  background-color: #e21a1a;
+}
+
+.squareMedium {
+  background-color: #ee983e;
+}
+
+.squareHigh {
+  background-color: #00b200;
+}
+
+.labelWrapper {
+  display: flex;
+  margin-bottom: 0.25rem;
+  align-items: center;
+
+  & > div {
+    margin-right: 0.5rem;
+  }
+  & > input {
+    margin-right: 0.5rem;
+  }
+}

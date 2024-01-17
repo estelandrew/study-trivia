@@ -2,10 +2,15 @@
   display: inline-block;
   font-weight: 700;
   line-height: normal;
-  padding: 0.25rem 0.5rem;
+  padding: 0.25rem 0.75rem;
   border-radius: 8px;
   cursor: pointer;
   background-color: var(--color-table-blue);
   color: #fff;
   text-align: center;
+
+  &:hover {
+    background-color: var(--color-table-blue-hover);
+    transition: 0.25s;
+  }
 }
