@@ -14,6 +14,7 @@
   --color-site-background: #040020;
   --color-site-background-tinted: #1d1936;
   --color-table-blue: #235484;
+  --color-table-blue-hover: #386590;
   --border-radius: 8px;
 }
 
@@ -49,4 +50,9 @@ body {
 
 .arts-and-literature {
   background-color: var(--color-purple);
+}
+
+input[type="checkbox"] {
+  width: 1.125rem;
+  height: 1.125rem;
 }

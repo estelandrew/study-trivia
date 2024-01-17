@@ -4,6 +4,7 @@ import { IconType } from "react-icons";
 
 type PropsType = {
   icon: IconType;
+  idForToggle: string;
   label?: string;
   children: ReactNode;
 };
@@ -13,15 +14,16 @@ enum DropDownStates {
   Hidden = "hidden",
 }
 
-const ButtonWithDropdown = ({ icon: Icon, children, label }: PropsType) => {
+const ButtonWithDropdown = ({
+  icon: Icon,
+  idForToggle, // see note in last useEffect
+  children,
+  label,
+}: PropsType) => {
   const dropDownContainer = useRef<HTMLDivElement>(null);
   const [dropDownState, setDropdownState] = useState<DropDownStates>(
     DropDownStates.Hidden
   );
-
-  useEffect(() => {
-    setDropdownState(DropDownStates.Hidden);
-  }, []);
 
   useEffect(() => {
     if (dropDownState === DropDownStates.Hidden) {
@@ -40,7 +42,12 @@ const ButtonWithDropdown = ({ icon: Icon, children, label }: PropsType) => {
     return () => window.removeEventListener("click", handleOutsideClick);
   }, [dropDownState]);
 
-  const toggleDropdown = (e: React.MouseEvent<HTMLDivElement>) => {
+  const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    toggleDropdown();
+    e.stopPropagation();
+  };
+
+  const toggleDropdown = () => {
     setDropdownState((prev) => {
       const newState =
         prev === DropDownStates.Hidden
@@ -48,12 +55,19 @@ const ButtonWithDropdown = ({ icon: Icon, children, label }: PropsType) => {
           : DropDownStates.Hidden;
       return newState;
     });
-    e.stopPropagation();
   };
+
+  useEffect(() => {
+    setDropdownState(DropDownStates.Hidden);
+    // take the id past in from state and attach toggleDropdown on click
+    // this allows for closing the dropdown from outside of this component
+    const clickableEl = document.querySelector(`#${idForToggle}`);
+    clickableEl?.addEventListener("click", toggleDropdown);
+  }, [idForToggle]);
 
   return (
     <div className={styles.container}>
-      <div className={styles.buttonContainer} onClick={toggleDropdown}>
+      <div className={styles.buttonContainer} onClick={handleButtonClick}>
         <Icon />
         {label}
       </div>

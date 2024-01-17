@@ -16,12 +16,11 @@ export const updateConfidenceLevelStorage = (id: string, value: string) => {
     // else push onto end of array
     let result = getConfidenceLevelStorage();
     const index = result.findIndex((item: { id: string }) => item.id === id);
-    const noUpdateNeeded =
-      index !== -1 && result[index].confidenceLevel === confidenceLevel;
+    const noUpdateNeeded = index !== -1 && result[index].value === value;
     if (noUpdateNeeded) {
       return -1;
     } else if (index !== -1) {
-      result[index] = { id, confidenceLevel };
+      result[index] = { id, value };
       storage = [...result];
     } else {
       storage = [...result];

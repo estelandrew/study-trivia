@@ -42,3 +42,10 @@ export interface ConfidenceLevelType {
 }
 
 export type ConfidenceLevelStorageType = ConfidenceLevelType[] | null;
+
+export type ConfidenceLevelsFilterSelectionsType = {
+  unevaluated: boolean;
+  low: boolean;
+  medium: boolean;
+  high: boolean;
+};

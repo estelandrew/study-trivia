@@ -11,10 +11,11 @@
   padding: 0.5rem;
   border-radius: 8px;
   cursor: pointer;
-  background-color: #3a3266;
+  //background-color: #3a3266;
+  border: 2px solid #3a3266;
   text-align: center;
   &:hover {
-    background: #4d4675;
+    background: #36324c;
   }
 
   svg {
@@ -23,7 +24,7 @@
 }
 
 .dropdownContainer {
-  min-width: 11rem;
+  min-width: 9rem;
   width: auto;
   background-color: var(--color-site-background-tinted);
   color: #fff;
@@ -31,6 +32,7 @@
   border-radius: 8px;
   position: absolute;
   top: 2.75rem;
+  left: -0.75rem;
   //padding: 0.5rem;
 }
 
