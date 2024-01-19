@@ -1,0 +1,30 @@
+.container {
+  width: 13rem;
+}
+
+.list {
+  list-style: none;
+  padding: 0;
+
+  li {
+    padding: 0.25rem 0 0.25rem 1.25rem;
+    line-height: 1.25rem;
+
+    &.selected {
+      padding-left: 0.25rem;
+      &::before {
+        content: "\2713\00a0";
+      }
+    }
+
+    &:hover {
+      cursor: pointer;
+      background-color: #4a465e;
+    }
+  }
+}
+
+.heading {
+  margin-bottom: 1rem;
+  font-weight: 700;
+}
