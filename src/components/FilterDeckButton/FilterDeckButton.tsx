@@ -4,9 +4,11 @@ import { FaFilter } from "react-icons/fa";
 import styles from "./FilterDeckButton.module.scss";
 import Button from "@components/Button/Button";
 import { CardsContext } from "@root/src/hooks/useCardsContext";
+import { DeckviewToolbarContext } from "@components/DeckViewToolbar/DeckViewToolbar";
 
 export const FilterDeckButton = () => {
   const { cards, filterCards } = useContext(CardsContext);
+  const { toggleDropdown } = useContext(DeckviewToolbarContext);
   const [selections, setSelections] = useState({
     unevaluated: false,
     low: false,
@@ -24,9 +26,14 @@ export const FilterDeckButton = () => {
     });
   };
 
+  const onClickApply = () => {
+    toggleDropdown("filter");
+    filterCards(selections);
+  };
+
   return (
-    <ButtonWithDropdown icon={FaFilter} idForToggle="filter-button">
-      <div>
+    <ButtonWithDropdown icon={FaFilter} context="filter">
+      <div className={styles.container}>
         <div className={styles.heading}>Confidence Levels:</div>
         <div className={styles.filters}>
           <div className={styles.labelWrapper}>
@@ -88,8 +95,8 @@ export const FilterDeckButton = () => {
             </div>
           </div>
           <br />
-          <div id="filter-button">
-            <Button onClick={() => filterCards(selections)}>Apply</Button>
+          <div id="apply-filter-button">
+            <Button onClick={onClickApply}>Apply</Button>
           </div>
         </div>
       </div>

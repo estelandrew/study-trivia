@@ -1,10 +1,18 @@
-import { ReactNode, useRef, useState, useEffect } from "react";
+import {
+  ReactNode,
+  useRef,
+  useState,
+  useContext,
+  useEffect,
+  useCallback,
+} from "react";
 import styles from "./ButtonWithDropdown.module.scss";
 import { IconType } from "react-icons";
+import { DeckviewToolbarContext } from "@components/DeckViewToolbar/DeckViewToolbar";
 
 type PropsType = {
   icon: IconType;
-  idForToggle: string;
+  context: string;
   label?: string;
   children: ReactNode;
 };
@@ -16,54 +24,60 @@ enum DropDownStates {
 
 const ButtonWithDropdown = ({
   icon: Icon,
-  idForToggle, // see note in last useEffect
+  context,
   children,
   label,
 }: PropsType) => {
+  const { dropdownOpenState, setDropdownOpenState, toggleDropdown } =
+    useContext(DeckviewToolbarContext);
   const dropDownContainer = useRef<HTMLDivElement>(null);
-  const [dropDownState, setDropdownState] = useState<DropDownStates>(
+  const [dropdownVisibility, setDropdownVisibility] = useState<DropDownStates>(
     DropDownStates.Hidden
   );
 
-  useEffect(() => {
-    if (dropDownState === DropDownStates.Hidden) {
-      return;
-    }
-    function handleOutsideClick(event: MouseEvent) {
+  const handleOuterClick = useCallback(
+    (e: MouseEvent) => {
       if (
         dropDownContainer.current &&
-        !dropDownContainer.current.contains(event.target as Node)
+        !dropDownContainer.current.contains(e.target as Node)
       ) {
-        setDropdownState(DropDownStates.Hidden);
+        setDropdownOpenState({
+          sort: false,
+          filter: false,
+        });
       }
-    }
-    window.addEventListener("click", handleOutsideClick);
-    // clean up
-    return () => window.removeEventListener("click", handleOutsideClick);
-  }, [dropDownState]);
-
-  const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
-    toggleDropdown();
-    e.stopPropagation();
-  };
-
-  const toggleDropdown = () => {
-    setDropdownState((prev) => {
-      const newState =
-        prev === DropDownStates.Hidden
-          ? DropDownStates.Visible
-          : DropDownStates.Hidden;
-      return newState;
-    });
-  };
+    },
+    [setDropdownOpenState]
+  );
 
   useEffect(() => {
-    setDropdownState(DropDownStates.Hidden);
-    // take the id past in from state and attach toggleDropdown on click
-    // this allows for closing the dropdown from outside of this component
-    const clickableEl = document.querySelector(`#${idForToggle}`);
-    clickableEl?.addEventListener("click", toggleDropdown);
-  }, [idForToggle]);
+    if (
+      dropdownOpenState &&
+      dropdownOpenState[context as keyof typeof dropdownOpenState]
+    ) {
+      setDropdownVisibility(DropDownStates.Visible);
+    } else {
+      setDropdownVisibility(DropDownStates.Hidden);
+    }
+  }, [dropdownOpenState, context]);
+
+  useEffect(() => {
+    return () => window.removeEventListener("click", handleOuterClick);
+  }, [setDropdownOpenState, handleOuterClick]);
+
+  useEffect(() => {
+    if (dropdownVisibility === DropDownStates.Hidden) {
+      return;
+    }
+    window.addEventListener("click", handleOuterClick);
+    // clean up
+    return () => window.removeEventListener("click", handleOuterClick);
+  }, [dropdownVisibility, setDropdownOpenState, handleOuterClick]);
+
+  const handleButtonClick = (e: React.MouseEvent<HTMLDivElement>) => {
+    toggleDropdown(context);
+    e.stopPropagation();
+  };
 
   return (
     <div className={styles.container}>
@@ -73,7 +87,7 @@ const ButtonWithDropdown = ({
       </div>
       <div
         ref={dropDownContainer}
-        className={`${styles.dropdownContainer} ${styles[dropDownState]}`}
+        className={`${styles.dropdownContainer} ${styles[dropdownVisibility]}`}
       >
         {children}
       </div>
