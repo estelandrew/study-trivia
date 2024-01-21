@@ -7,11 +7,13 @@ import { updateConfidenceLevelStorage } from "@lib/localStorage";
 import { ConfidenceLevelStorageType } from "../../../types";
 
 type PropsType = {
+  deckId: string;
   cardId: string;
   confidenceLevelStorage: ConfidenceLevelStorageType;
 };
 
 export const ConfidenceMeter = ({
+  deckId,
   cardId,
   confidenceLevelStorage,
 }: PropsType) => {
@@ -25,7 +27,7 @@ export const ConfidenceMeter = ({
   useEffect(() => {
     if (confidenceLevelStorage && confidenceLevelStorage.length) {
       const index = confidenceLevelStorage.findIndex(
-        (item) => item.id === cardId
+        (item) => item.cardId === cardId
       );
       if (index !== -1) {
         const item = confidenceLevelStorage[index];
@@ -64,7 +66,7 @@ export const ConfidenceMeter = ({
         newConfidenceLevel = "default";
     }
     theDiv.parentElement?.classList.add(styles["selected"]);
-    updateConfidenceLevelStorage(cardId, newConfidenceLevel);
+    updateConfidenceLevelStorage(deckId, cardId, newConfidenceLevel);
     setCurrentConfidenceLevel(newConfidenceLevel);
   };
 

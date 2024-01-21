@@ -1,13 +1,15 @@
-import { CardDataType } from "../../types";
-
 export const getConfidenceLevelStorage = () => {
   const storage = localStorage.getItem("confidenceLevels");
   const result = storage ? JSON.parse(storage) : storage;
   return result;
 };
 
-export const updateConfidenceLevelStorage = (id: string, value: string) => {
-  let confidenceLevel = { id, value };
+export const updateConfidenceLevelStorage = (
+  deckId: string,
+  cardId: string,
+  value: string
+) => {
+  let confidenceLevel = { deckId, cardId, value };
   let storage: object[] = [];
   // if confidence levels exist as local storage item, update accordingly; else create storage and set initial item
   if (localStorage.getItem("confidenceLevels")) {
@@ -15,12 +17,14 @@ export const updateConfidenceLevelStorage = (id: string, value: string) => {
     // else if item exists, update with new value
     // else push onto end of array
     let result = getConfidenceLevelStorage();
-    const index = result.findIndex((item: { id: string }) => item.id === id);
+    const index = result.findIndex(
+      (item: { cardId: string }) => item.cardId === cardId
+    );
     const noUpdateNeeded = index !== -1 && result[index].value === value;
     if (noUpdateNeeded) {
       return -1;
     } else if (index !== -1) {
-      result[index] = { id, value };
+      result[index] = { deckId, cardId, value };
       storage = [...result];
     } else {
       storage = [...result];
