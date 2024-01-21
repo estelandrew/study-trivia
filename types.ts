@@ -37,7 +37,8 @@ export enum DeckViews {
 }
 
 export interface ConfidenceLevelType {
-  id: string;
+  deckId: string;
+  cardId: string;
   value: string;
 }
 

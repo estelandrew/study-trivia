@@ -4,12 +4,14 @@ import { getConfidenceLevelStorage } from "@lib/localStorage";
 import { ConfidenceLevelsFilterSelectionsType } from "@root/types";
 
 type CardDataContextType = {
+  deckId: string;
   cards: CardDataType[] | undefined;
   cardsFS: CardDataType[]; // cards filtered/sorted
   filterCards: (selections: ConfidenceLevelsFilterSelectionsType) => void;
 };
 
 export const CardsContext = createContext<CardDataContextType>({
+  deckId: "",
   cards: [],
   cardsFS: [],
   filterCards: () => {},
