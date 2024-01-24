@@ -13,19 +13,12 @@ import { CardsContext } from "@hooks/useCardsContext";
 const DeckTableView = () => {
   const [confidenceLevelStorage, setConfidenceLevelStorage] =
     useState<ConfidenceLevelStorageType | null>(null);
-  const { deckId, cards, cardsFS } = useContext(CardsContext);
+  const { deckId, cards, cardsFS, initCards } = useContext(CardsContext);
 
   useEffect(() => {
+    initCards();
     setConfidenceLevelStorage(getConfidenceLevelStorage());
-  }, []);
-
-  useEffect(() => {
-    console.log({ confidenceLevelStorage });
-  }, [confidenceLevelStorage]);
-
-  const updateCardIsRevealed = () => {
-    console.log("reveal card");
-  };
+  }, [initCards]);
 
   const Row = ({ card }: { card: CardDataType }) => {
     return (

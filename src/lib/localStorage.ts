@@ -1,8 +1,49 @@
+import { ConfidenceLevelType } from "@root/types";
+
 export const getConfidenceLevelStorage = () => {
   const storage = localStorage.getItem("confidenceLevels");
   const result = storage ? JSON.parse(storage) : storage;
   return result;
 };
+
+export const getConfidenceLevelStorageByDeckId = (deckId: string) => {
+  const storage = localStorage.getItem("confidenceLevels");
+  const result = storage
+    ? JSON.parse(storage).filter(
+        (item: ConfidenceLevelType) => item.deckId === deckId
+      )
+    : storage;
+  return result;
+};
+
+export const getConfidenceLevelStorageByDeckIdSortedAsc = (deckId: string) => {
+  let result = [],
+    itemsLow = [],
+    itemsMedium = [],
+    itemsHigh = [];
+  const items = getConfidenceLevelStorageByDeckId(deckId);
+  for (let i = 0; i < items.length; i++) {
+    const item = items[i];
+    const val = item.value;
+    switch (val) {
+      case "low":
+        itemsLow.push(item);
+        break;
+      case "medium":
+        itemsMedium.push(item);
+        break;
+      case "high":
+        itemsHigh.push(item);
+        break;
+      default:
+        continue;
+    }
+  }
+  result = [...itemsLow, ...itemsMedium, ...itemsHigh];
+  return result;
+};
+
+const getConfidenceLevelStorageByDeckIdSortedDesc = (deckId: string) => {};
 
 export const updateConfidenceLevelStorage = (
   deckId: string,
