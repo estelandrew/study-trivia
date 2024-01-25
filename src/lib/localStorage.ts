@@ -1,6 +1,18 @@
+import { ConfidenceLevelType } from "@root/types";
+
 export const getConfidenceLevelStorage = () => {
   const storage = localStorage.getItem("confidenceLevels");
   const result = storage ? JSON.parse(storage) : storage;
+  return result;
+};
+
+export const getConfidenceLevelStorageByDeckId = (deckId: string) => {
+  const storage = localStorage.getItem("confidenceLevels");
+  const result = storage
+    ? JSON.parse(storage).filter(
+        (item: ConfidenceLevelType) => item.deckId === deckId
+      )
+    : storage;
   return result;
 };
 

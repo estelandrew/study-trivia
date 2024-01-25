@@ -1,27 +1,23 @@
 "use client";
 import { useContext } from "react";
 import { useEffect, useState } from "react";
-import { DeckDataType } from "../../../types";
+import { CardDataType, DeckDataType } from "../../../types";
 import styles from "./DeckTableView.module.scss";
 import CardAnswer from "@components/CardAnswer/CardAnswer";
 import { ConfidenceMeter } from "@components/ConfidenceMeter/ConfidenceMeter";
-import { CardDataType } from "../../../types";
 import { getConfidenceLevelStorage } from "@lib/localStorage";
 import { ConfidenceLevelStorageType } from "../../../types";
 import { CardsContext } from "@hooks/useCardsContext";
 
 const DeckTableView = () => {
-  const [confidenceLevelStorage, setConfidenceLevelStorage] =
-    useState<ConfidenceLevelStorageType | null>(null);
-  const { deckId, cards, cardsFS } = useContext(CardsContext);
+  //const [confidenceLevelStorage, setConfidenceLevelStorage] =
+  useState<ConfidenceLevelStorageType | null>(null);
+  const { deckId, cards, liveCards, isCardsLoading, initCards } =
+    useContext(CardsContext);
 
   useEffect(() => {
-    setConfidenceLevelStorage(getConfidenceLevelStorage());
-  }, []);
-
-  useEffect(() => {
-    console.log({ confidenceLevelStorage });
-  }, [confidenceLevelStorage]);
+    initCards();
+  }, [initCards]);
 
   const updateCardIsRevealed = () => {
     console.log("reveal card");
@@ -38,7 +34,7 @@ const DeckTableView = () => {
           <ConfidenceMeter
             deckId={deckId}
             cardId={card.id}
-            confidenceLevelStorage={confidenceLevelStorage}
+            initialConfidenceLevel={card.confidenceLevel}
           />
         </div>
       </div>
@@ -53,8 +49,8 @@ const DeckTableView = () => {
           <div></div>
           <div>Confidence</div>
         </div>
-        {cardsFS.length > 0
-          ? cardsFS.map((card) => {
+        {liveCards.length > 0
+          ? liveCards.map((card) => {
               return <Row key={card.id} card={card} />;
             })
           : cards?.map((card) => {

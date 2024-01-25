@@ -22,6 +22,7 @@ export type CardDataType = {
   id: string;
   clue: string;
   answer: string;
+  confidenceLevel?: string;
 };
 
 export type CardUIFieldsType = {
