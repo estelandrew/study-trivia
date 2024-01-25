@@ -13,11 +13,23 @@ type PropsType = {
 
 const DeckPage = ({ data }: PropsType) => {
   const { id: deckId, slug, name, description, cards } = data || {};
-  const { cardsFS, filterCards } = useCardsContext(cards);
+  const { liveCards, isCardsLoading, filterCards, initCards } = useCardsContext(
+    deckId,
+    cards
+  );
 
   return (
     <>
-      <CardsContext.Provider value={{ deckId, cards, cardsFS, filterCards }}>
+      <CardsContext.Provider
+        value={{
+          deckId,
+          cards,
+          liveCards,
+          isCardsLoading,
+          filterCards,
+          initCards,
+        }}
+      >
         <PageHeader categorySlug={slug} text={name} description={description} />
         <div className={styles.row}>
           <div>

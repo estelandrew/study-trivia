@@ -1,41 +1,44 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import styles from "./ConfidenceMeter.module.scss";
 import { CardDataType } from "../../../types";
 import { updateConfidenceLevelStorage } from "@lib/localStorage";
 import { ConfidenceLevelStorageType } from "../../../types";
+import { CardsContext } from "@root/src/hooks/useCardsContext";
 
 type PropsType = {
   deckId: string;
   cardId: string;
-  confidenceLevelStorage: ConfidenceLevelStorageType;
+  initialConfidenceLevel?: string;
+  //confidenceLevelStorage: ConfidenceLevelStorageType;
 };
 
 export const ConfidenceMeter = ({
   deckId,
   cardId,
-  confidenceLevelStorage,
-}: PropsType) => {
-  const [isLoading, setIsLoading] = useState<boolean>(true);
-
+  initialConfidenceLevel,
+}: //confidenceLevelStorage,
+PropsType) => {
+  //const [isLoading, setIsLoading] = useState<boolean>(true);
+  const { isCardsLoading } = useContext(CardsContext);
   const [currentConfidenceLevel, setCurrentConfidenceLevel] = useState<
-    string | null
-  >(null);
+    string | undefined
+  >(initialConfidenceLevel);
   const [tempConfidenceLevel, setTempConfidenceLevel] = useState<string>("");
 
-  useEffect(() => {
-    if (confidenceLevelStorage && confidenceLevelStorage.length) {
-      const index = confidenceLevelStorage.findIndex(
-        (item) => item.cardId === cardId
-      );
-      if (index !== -1) {
-        const item = confidenceLevelStorage[index];
-        setCurrentConfidenceLevel(item.value);
-      }
-    }
-    setIsLoading(false);
-  }, [confidenceLevelStorage, cardId]);
+  // useEffect(() => {
+  //   if (confidenceLevelStorage && confidenceLevelStorage.length) {
+  //     const index = confidenceLevelStorage.findIndex(
+  //       (item) => item.cardId === cardId
+  //     );
+  //     if (index !== -1) {
+  //       const item = confidenceLevelStorage[index];
+  //       setCurrentConfidenceLevel(item.value);
+  //     }
+  //   }
+  //   setIsLoading(false);
+  // }, [confidenceLevelStorage, cardId]);
 
   const handleOnMouseOver = (level: string) => {
     setTempConfidenceLevel(level);
@@ -72,7 +75,7 @@ export const ConfidenceMeter = ({
 
   return (
     <div
-      className={`${styles.container} ${isLoading && styles.loading} ${
+      className={`${styles.container} ${isCardsLoading && styles.loading} ${
         styles[
           `${
             tempConfidenceLevel
