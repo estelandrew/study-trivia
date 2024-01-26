@@ -1,9 +1,14 @@
+import { useContext } from "react";
 import ButtonWithDropdown from "@components/ButtonWithDropdown/ButtonWithDropdown";
 import { FaSort } from "react-icons/fa6";
 import { useState } from "react";
 import styles from "./SortDeckButton.module.scss";
+import { CardsContext } from "@root/src/hooks/useCardsContext";
+import { DeckviewToolbarContext } from "@components/DeckViewToolbar/DeckViewToolbar";
 
 export const SortDeckButton = () => {
+  const { sortCards } = useContext(CardsContext);
+  const { toggleDropdown } = useContext(DeckviewToolbarContext);
   const [selection, setSelection] = useState({
     confidenceAsc: false,
     confidenceDesc: false,
@@ -22,6 +27,8 @@ export const SortDeckButton = () => {
         [id]: true,
       };
     });
+    sortCards(id);
+    toggleDropdown("sort");
   };
 
   return (

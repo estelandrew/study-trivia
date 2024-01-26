@@ -13,10 +13,15 @@ type PropsType = {
 
 const DeckPage = ({ data }: PropsType) => {
   const { id: deckId, slug, name, description, cards } = data || {};
-  const { liveCards, isCardsLoading, filterCards, initCards } = useCardsContext(
-    deckId,
-    cards
-  );
+  const {
+    liveCards,
+    isCardsLoading,
+    filterCards,
+    sortCards,
+    initCards,
+    toolbarStatus,
+    setToolbarStatus,
+  } = useCardsContext(deckId, cards);
 
   return (
     <>
@@ -27,7 +32,10 @@ const DeckPage = ({ data }: PropsType) => {
           liveCards,
           isCardsLoading,
           filterCards,
+          sortCards,
           initCards,
+          toolbarStatus,
+          setToolbarStatus,
         }}
       >
         <PageHeader categorySlug={slug} text={name} description={description} />

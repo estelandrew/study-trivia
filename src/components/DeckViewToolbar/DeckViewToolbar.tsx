@@ -10,12 +10,18 @@ type DropdownOpenStateType = {
   sort: boolean;
 };
 
+type ToolbarStatusType = {
+  sort: string;
+};
+
 type ToolbarContextType = {
   dropdownOpenState: DropdownOpenStateType;
   setDropdownOpenState: React.Dispatch<
     React.SetStateAction<DropdownOpenStateType>
   >;
   toggleDropdown: (context: string) => void;
+  toolbarStatus: ToolbarStatusType;
+  setToolbarStatus: React.Dispatch<React.SetStateAction<ToolbarStatusType>>;
 };
 
 export const DeckviewToolbarContext = createContext<ToolbarContextType>(
@@ -28,6 +34,9 @@ const DeckViewToolbar = () => {
       filter: false,
       sort: false,
     });
+  const [toolbarStatus, setToolbarStatus] = useState<ToolbarStatusType>({
+    sort: "",
+  });
 
   const toggleDropdown = (context: string) => {
     setDropdownOpenState((prev: DropdownOpenStateType) => {
@@ -40,7 +49,13 @@ const DeckViewToolbar = () => {
   };
   return (
     <DeckviewToolbarContext.Provider
-      value={{ dropdownOpenState, setDropdownOpenState, toggleDropdown }}
+      value={{
+        dropdownOpenState,
+        setDropdownOpenState,
+        toggleDropdown,
+        toolbarStatus,
+        setToolbarStatus,
+      }}
     >
       <div className={styles.toolbar}>
         <FilterDeckButton />
