@@ -5,10 +5,13 @@ import styles from "./FilterDeckButton.module.scss";
 import Button from "@components/Button/Button";
 import { CardsContext } from "@root/src/hooks/useCardsContext";
 import { DeckviewToolbarContext } from "@components/DeckViewToolbar/DeckViewToolbar";
+import { useToolbar } from "@hooks/useToolbar";
 
 export const FilterDeckButton = () => {
-  const { cards, filterCards } = useContext(CardsContext);
-  const { toggleDropdown } = useContext(DeckviewToolbarContext);
+  const { cards, filterCards, sortCards } = useContext(CardsContext);
+  const { toggleDropdown, toolbarStatus, setToolbarStatus } = useContext(
+    DeckviewToolbarContext
+  );
   const [selections, setSelections] = useState({
     unevaluated: false,
     low: false,
@@ -29,6 +32,9 @@ export const FilterDeckButton = () => {
   const onClickApply = () => {
     toggleDropdown("filter");
     filterCards(selections);
+    if (toolbarStatus.sort) {
+      sortCards(toolbarStatus.sort);
+    }
   };
 
   return (
