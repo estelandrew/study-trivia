@@ -13,13 +13,16 @@ type CardDataContextType = {
   isCardsLoading: boolean;
   filterCards: (selections: ConfidenceLevelsFilterSelectionsType) => void;
   sortCards: (selection: string) => void;
+  shuffleCards: () => void;
   initCards: () => void;
   toolbarStatus: ToolbarStatusType;
   setToolbarStatus: React.Dispatch<React.SetStateAction<ToolbarStatusType>>;
 };
 
 type ToolbarStatusType = {
-  sort: string;
+  filters: ConfidenceLevelsFilterSelectionsType;
+  sortType: string;
+  shuffledCards: CardDataType[];
 };
 
 export const CardsContext = createContext<CardDataContextType>({
@@ -29,8 +32,18 @@ export const CardsContext = createContext<CardDataContextType>({
   isCardsLoading: true,
   filterCards: () => {},
   sortCards: () => {},
+  shuffleCards: () => {},
   initCards: () => {},
-  toolbarStatus: { sort: "" },
+  toolbarStatus: {
+    filters: {
+      unevaluated: false,
+      low: false,
+      medium: false,
+      high: false,
+    },
+    sortType: "",
+    shuffledCards: [],
+  },
   setToolbarStatus: () => {},
 });
 
@@ -41,9 +54,17 @@ export const useCardsContext = (
   const [liveCards, setLiveCards] = useState<CardDataType[]>([]);
   const [isCardsLoading, setIsCardsLoading] = useState<boolean>(true);
   const [toolbarStatus, setToolbarStatus] = useState<ToolbarStatusType>({
-    sort: "",
+    filters: {
+      unevaluated: false,
+      low: false,
+      medium: false,
+      high: false,
+    },
+    sortType: "",
+    shuffledCards: [],
   });
   const filterUpdated = useRef(false);
+  const shuffleUpdated = useRef(false);
 
   const getAllCardsWithConfidenceLevel = useCallback(() => {
     const storage = getConfidenceLevelStorageByDeckId(deckId);
@@ -66,7 +87,10 @@ export const useCardsContext = (
 
   const filterCards = (selections: ConfidenceLevelsFilterSelectionsType) => {
     filterUpdated.current = true;
-    let cards = getAllCardsWithConfidenceLevel();
+    const shuffledCards = toolbarStatus.shuffledCards;
+    let cards = shuffledCards.length
+      ? shuffledCards
+      : getAllCardsWithConfidenceLevel();
     const showAll =
       !selections.unevaluated &&
       !selections.low &&
@@ -87,6 +111,12 @@ export const useCardsContext = (
       );
     }
     cards && setLiveCards(result);
+    setToolbarStatus((prev) => {
+      return {
+        ...prev,
+        filters: { ...selections },
+      };
+    });
   };
 
   const sortCardsByConfidence = useCallback(
@@ -163,21 +193,73 @@ export const useCardsContext = (
             break;
         }
         setLiveCards(result);
-        setToolbarStatus({ sort: selection });
+        setToolbarStatus((prev) => {
+          return {
+            ...prev,
+            sortType: selection,
+          };
+        });
       }
     },
     [liveCards.length, sortCardsAlphabetically, sortCardsByConfidence]
   );
 
+  const shuffleCards = useCallback(() => {
+    shuffleUpdated.current = true;
+    let cards = getAllCardsWithConfidenceLevel();
+    let result: CardDataType[] = [];
+    if (!liveCards.length) {
+      return;
+    } else {
+      //const liveCardsCopy = liveCards.slice();
+      if (cards) {
+        result = shuffle(cards);
+      }
+      setLiveCards(result);
+      setToolbarStatus((prev) => {
+        return {
+          ...prev,
+          sortType: "",
+          shuffledCards: result,
+        };
+      });
+    }
+  }, [getAllCardsWithConfidenceLevel, liveCards]);
+
+  /** Fisher-Yates (aka Knuth) Shuffle. copied and pasted from stackoverflow */
+  function shuffle(arr: CardDataType[]) {
+    let currentIndex = arr.length,
+      randomIndex;
+
+    // While there remain elements to shuffle.
+    while (currentIndex > 0) {
+      // Pick a remaining element.
+      randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      // And swap it with the current element.
+      [arr[currentIndex], arr[randomIndex]] = [
+        arr[randomIndex],
+        arr[currentIndex],
+      ];
+    }
+
+    return arr;
+  }
+
   useEffect(() => {
     if (liveCards.length > 0 && isCardsLoading) {
       setIsCardsLoading(false);
     }
-    if (filterUpdated.current && toolbarStatus.sort) {
-      sortCards(toolbarStatus.sort);
+    if (filterUpdated.current && toolbarStatus.sortType) {
+      sortCards(toolbarStatus.sortType);
       filterUpdated.current = false;
     }
-  }, [liveCards, isCardsLoading, toolbarStatus.sort, sortCards]);
+    if (shuffleUpdated.current) {
+      filterCards(toolbarStatus.filters);
+      shuffleUpdated.current = false;
+    }
+  }, [liveCards, isCardsLoading, toolbarStatus, sortCards]);
 
   return {
     CardsContext,
@@ -186,6 +268,7 @@ export const useCardsContext = (
     isCardsLoading,
     filterCards,
     sortCards,
+    shuffleCards,
     initCards,
     toolbarStatus,
     setToolbarStatus,

@@ -7,26 +7,33 @@ import { CardsContext } from "@root/src/hooks/useCardsContext";
 import { DeckviewToolbarContext } from "@components/DeckViewToolbar/DeckViewToolbar";
 
 export const SortDeckButton = () => {
-  const { sortCards } = useContext(CardsContext);
+  const { sortCards, toolbarStatus, setToolbarStatus } =
+    useContext(CardsContext);
   const { toggleDropdown } = useContext(DeckviewToolbarContext);
-  const [selection, setSelection] = useState({
-    confidenceAsc: false,
-    confidenceDesc: false,
-    clueAsc: false,
-    clueDesc: false,
-  });
+  // const [selection, setSelection] = useState({
+  //   confidenceAsc: false,
+  //   confidenceDesc: false,
+  //   clueAsc: false,
+  //   clueDesc: false,
+  // });
 
   const handleSelect = (e: React.MouseEvent) => {
     const id = e.currentTarget.id;
-    setSelection((prev) => {
+    setToolbarStatus((prev) => {
       return {
-        confidenceAsc: false,
-        confidenceDesc: false,
-        clueAsc: false,
-        clueDesc: false,
-        [id]: true,
+        ...prev,
+        sortType: id,
       };
     });
+    // setSelection((prev) => {
+    //   return {
+    //     confidenceAsc: false,
+    //     confidenceDesc: false,
+    //     clueAsc: false,
+    //     clueDesc: false,
+    //     [id]: true,
+    //   };
+    // });
     sortCards(id);
     toggleDropdown("sort");
   };
@@ -38,28 +45,40 @@ export const SortDeckButton = () => {
         <ul className={styles.list}>
           <li
             id="confidenceAsc"
-            className={selection.confidenceAsc ? `${styles.selected}` : ""}
+            className={
+              toolbarStatus.sortType === "confidenceAsc"
+                ? `${styles.selected}`
+                : ""
+            }
             onClick={handleSelect}
           >
             Confidence (low to high)
           </li>
           <li
             id="confidenceDesc"
-            className={selection.confidenceDesc ? `${styles.selected}` : ""}
+            className={
+              toolbarStatus.sortType === "confidenceDesc"
+                ? `${styles.selected}`
+                : ""
+            }
             onClick={handleSelect}
           >
             Confidence (high to low)
           </li>
           <li
             id="clueAsc"
-            className={selection.clueAsc ? `${styles.selected}` : ""}
+            className={
+              toolbarStatus.sortType === "clueAsc" ? `${styles.selected}` : ""
+            }
             onClick={handleSelect}
           >
             Clue (A-Z)
           </li>
           <li
             id="clueDesc"
-            className={selection.clueDesc ? `${styles.selected}` : ""}
+            className={
+              toolbarStatus.sortType === "clueDesc" ? `${styles.selected}` : ""
+            }
             onClick={handleSelect}
           >
             Clue (Z-A)

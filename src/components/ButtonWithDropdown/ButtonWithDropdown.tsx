@@ -44,6 +44,7 @@ const ButtonWithDropdown = ({
         setDropdownOpenState({
           sort: false,
           filter: false,
+          shuffle: false,
         });
       }
     },
