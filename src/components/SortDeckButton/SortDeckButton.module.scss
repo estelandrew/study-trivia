@@ -1,30 +1,21 @@
 .container {
-  width: 13rem;
-}
-
-.list {
-  list-style: none;
-  padding: 0;
-
-  li {
-    padding: 0.25rem 0 0.25rem 1.25rem;
-    line-height: 1.25rem;
-
-    &.selected {
-      padding-left: 0.25rem;
-      &::before {
-        content: "\2713\00a0";
-      }
-    }
-
-    &:hover {
-      cursor: pointer;
-      background-color: #4a465e;
-    }
-  }
+  width: 15rem;
 }
 
 .heading {
   margin-bottom: 1rem;
   font-weight: 700;
+}
+
+.inputWrapper {
+  display: flex;
+  margin-bottom: 0.25rem;
+  align-items: center;
+
+  & > div {
+    margin-right: 0.5rem;
+  }
+  & > input {
+    margin-right: 0.5rem;
+  }
 }
