@@ -64,7 +64,7 @@ const DeckViewToolbar = () => {
       <div className={styles.toolbar}>
         <FilterDeckButton />
         <SortDeckButton />
-        <ShuffleDeckButton />
+        {/* <ShuffleDeckButton /> */}
       </div>
     </DeckviewToolbarContext.Provider>
   );

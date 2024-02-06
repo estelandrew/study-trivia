@@ -5,6 +5,7 @@ import { useState } from "react";
 import styles from "./SortDeckButton.module.scss";
 import { CardsContext } from "@root/src/hooks/useCardsContext";
 import { DeckviewToolbarContext } from "@components/DeckViewToolbar/DeckViewToolbar";
+import Button from "@components/Button/Button";
 
 export const SortDeckButton = () => {
   const { sortCards, toolbarStatus, setToolbarStatus } =
@@ -42,7 +43,56 @@ export const SortDeckButton = () => {
     <ButtonWithDropdown icon={FaSort} context="sort">
       <div className={styles.container}>
         <div className={styles.heading}>Sort By:</div>
-        <ul className={styles.list}>
+        <div className={styles.inputWrapper}>
+          <input
+            type="radio"
+            id="confidenceAsc"
+            name="sort-options"
+            value="Confidence (low to high)"
+          />
+          <label htmlFor="html">Confidence (low to high)</label>
+        </div>
+        <div className={styles.inputWrapper}>
+          <input
+            type="radio"
+            id="confidenceDesc"
+            name="sort-options"
+            value="Confidence (high to low)"
+          />
+          <label htmlFor="css">Confidence (high to low)</label>
+        </div>
+        <div className={styles.inputWrapper}>
+          <input
+            type="radio"
+            id="clueAsc"
+            name="sort-options"
+            value="Clue (A-Z)"
+          />
+          <label htmlFor="javascript">Clue (A-Z)</label>
+        </div>
+        <div className={styles.inputWrapper}>
+          <input
+            type="radio"
+            id="clueDesc"
+            name="sort-options"
+            value="Clue (Z-A)"
+          />
+          <label htmlFor="javascript">Clue (Z-A)</label>
+        </div>
+        <div className={styles.inputWrapper}>
+          <input
+            type="radio"
+            id="sortShuffle"
+            name="sort-options"
+            value="Shuffle"
+          />
+          <label htmlFor="javascript">Shuffle</label>
+        </div>
+        <br />
+        <div id="apply-filter-button">
+          <Button onClick={handleSelect}>Apply</Button>
+        </div>
+        {/* <ul className={styles.list}>
           <li
             id="confidenceAsc"
             className={
@@ -83,7 +133,7 @@ export const SortDeckButton = () => {
           >
             Clue (Z-A)
           </li>
-        </ul>
+        </ul> */}
       </div>
     </ButtonWithDropdown>
   );

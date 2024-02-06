@@ -1,5 +1,5 @@
 .container {
-  width: 13rem;
+  width: 15rem;
 }
 
 .list {
@@ -27,4 +27,17 @@
 .heading {
   margin-bottom: 1rem;
   font-weight: 700;
+}
+
+.inputWrapper {
+  display: flex;
+  margin-bottom: 0.25rem;
+  align-items: center;
+
+  & > div {
+    margin-right: 0.5rem;
+  }
+  & > input {
+    margin-right: 0.5rem;
+  }
 }
