@@ -98,6 +98,12 @@ export const useCardsContext = (
       !selections.high;
     if (showAll) {
       cards && setLiveCards(cards);
+      setToolbarStatus((prev) => {
+        return {
+          ...prev,
+          filters: { ...selections },
+        };
+      });
       return;
     }
     let result: CardDataType[] = [];

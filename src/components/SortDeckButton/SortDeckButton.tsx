@@ -11,31 +11,19 @@ export const SortDeckButton = () => {
   const { sortCards, toolbarStatus, setToolbarStatus } =
     useContext(CardsContext);
   const { toggleDropdown } = useContext(DeckviewToolbarContext);
-  // const [selection, setSelection] = useState({
-  //   confidenceAsc: false,
-  //   confidenceDesc: false,
-  //   clueAsc: false,
-  //   clueDesc: false,
-  // });
 
-  const handleSelect = (e: React.MouseEvent) => {
-    const id = e.currentTarget.id;
+  const onClickApply = (e: React.MouseEvent) => {
+    const checkedInput = document.querySelector(
+      'input[name="sort-options"]:checked'
+    ) as HTMLInputElement;
+    const val = checkedInput?.value;
     setToolbarStatus((prev) => {
       return {
         ...prev,
-        sortType: id,
+        sortType: val,
       };
     });
-    // setSelection((prev) => {
-    //   return {
-    //     confidenceAsc: false,
-    //     confidenceDesc: false,
-    //     clueAsc: false,
-    //     clueDesc: false,
-    //     [id]: true,
-    //   };
-    // });
-    sortCards(id);
+    sortCards(val);
     toggleDropdown("sort");
   };
 
@@ -48,7 +36,7 @@ export const SortDeckButton = () => {
             type="radio"
             id="confidenceAsc"
             name="sort-options"
-            value="Confidence (low to high)"
+            value="confidenceAsc"
           />
           <label htmlFor="html">Confidence (low to high)</label>
         </div>
@@ -57,7 +45,7 @@ export const SortDeckButton = () => {
             type="radio"
             id="confidenceDesc"
             name="sort-options"
-            value="Confidence (high to low)"
+            value="confidenceDesc"
           />
           <label htmlFor="css">Confidence (high to low)</label>
         </div>
@@ -66,7 +54,7 @@ export const SortDeckButton = () => {
             type="radio"
             id="clueAsc"
             name="sort-options"
-            value="Clue (A-Z)"
+            value="clueAsc"
           />
           <label htmlFor="javascript">Clue (A-Z)</label>
         </div>
@@ -75,65 +63,14 @@ export const SortDeckButton = () => {
             type="radio"
             id="clueDesc"
             name="sort-options"
-            value="Clue (Z-A)"
+            value="clueDesc"
           />
           <label htmlFor="javascript">Clue (Z-A)</label>
         </div>
-        <div className={styles.inputWrapper}>
-          <input
-            type="radio"
-            id="sortShuffle"
-            name="sort-options"
-            value="Shuffle"
-          />
-          <label htmlFor="javascript">Shuffle</label>
-        </div>
         <br />
-        <div id="apply-filter-button">
-          <Button onClick={handleSelect}>Apply</Button>
+        <div id="apply-sort-button">
+          <Button onClick={onClickApply}>Apply</Button>
         </div>
-        {/* <ul className={styles.list}>
-          <li
-            id="confidenceAsc"
-            className={
-              toolbarStatus.sortType === "confidenceAsc"
-                ? `${styles.selected}`
-                : ""
-            }
-            onClick={handleSelect}
-          >
-            Confidence (low to high)
-          </li>
-          <li
-            id="confidenceDesc"
-            className={
-              toolbarStatus.sortType === "confidenceDesc"
-                ? `${styles.selected}`
-                : ""
-            }
-            onClick={handleSelect}
-          >
-            Confidence (high to low)
-          </li>
-          <li
-            id="clueAsc"
-            className={
-              toolbarStatus.sortType === "clueAsc" ? `${styles.selected}` : ""
-            }
-            onClick={handleSelect}
-          >
-            Clue (A-Z)
-          </li>
-          <li
-            id="clueDesc"
-            className={
-              toolbarStatus.sortType === "clueDesc" ? `${styles.selected}` : ""
-            }
-            onClick={handleSelect}
-          >
-            Clue (Z-A)
-          </li>
-        </ul> */}
       </div>
     </ButtonWithDropdown>
   );
