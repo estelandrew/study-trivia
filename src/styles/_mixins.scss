@@ -1,0 +1,25 @@
+@mixin media-phone-only {
+  @media (max-width: 599px) {
+    @content;
+  }
+}
+@mixin media-min-tablet-portrait {
+  @media (min-width: 600px) {
+    @content;
+  }
+}
+@mixin media-min-tablet-landscape {
+  @media (min-width: 900px) {
+    @content;
+  }
+}
+@mixin media-min-desktop {
+  @media (min-width: 1200px) {
+    @content;
+  }
+}
+@mixin media-min-large-desktop {
+  @media (min-width: 1800px) {
+    @content;
+  }
+}

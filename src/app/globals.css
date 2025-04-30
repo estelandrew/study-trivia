@@ -1,6 +1,21 @@
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --color-purple: #a346a3;
+  --color-purple-tinted: #b56ab5;
+  --color-green: #0d883c;
+  --color-red: #c23232;
+  --color-blue: #3278bd;
+  --color-yellow: #fdd023;
+  --color-teal: #82c9b6;
+  --color-orange: #ffac1c;
+  --color-dark-text: #010000;
+  --color-gray-background: #737373;
+  --color-card-main: #3a3266;
+  --color-card-tinted: #756f93;
+  --color-site-background: #040020;
+  --color-site-background-tinted: #1d1936;
+  --color-table-blue: #235484;
+  --color-table-blue-hover: #386590;
+  --border-radius: 8px;
 }
 
 @media (prefers-color-scheme: dark) {
@@ -14,12 +29,12 @@ html,
 body {
   max-width: 100vw;
   overflow-x: hidden;
+  font-family: var(--rubik);
 }
 
 body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: Arial, Helvetica, sans-serif;
+  color: #fff;
+  background: var(--color-site-background);
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
