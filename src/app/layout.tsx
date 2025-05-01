@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import { Rubik, Luckiest_Guy } from "next/font/google";
+import Header from "../components/Header/Header";
 import "./globals.css";
 
 const rubik = Rubik({
@@ -26,6 +27,9 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={`${luckiestGuy.variable} ${rubik.variable}`}>
+        <header>
+          <Header />
+        </header>
         {children}
       </body>
     </html>

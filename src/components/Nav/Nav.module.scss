@@ -1,0 +1,78 @@
+@import "../../styles/mixins";
+
+.container {
+  font-size: 1rem;
+  @include media-min-tablet-landscape {
+    font-size: 1.125rem;
+    font-weight: 700;
+  }
+  svg {
+    font-size: 1.5rem;
+    font-weight: 400;
+  }
+  position: relative;
+}
+
+.menuButton {
+  box-sizing: border-box;
+  text-align: right;
+  padding: 0.5rem 0;
+  width: 3rem;
+  height: 3rem;
+  text-align: center;
+  margin-left: calc(100% - 3rem);
+  border-radius: 50%;
+  &:hover {
+    cursor: pointer;
+    transition: 200ms;
+    svg {
+      opacity: 1;
+    }
+  }
+  @include media-min-tablet-landscape {
+    display: none;
+  }
+}
+
+.linksContainer {
+  padding: 1rem 0;
+  width: 100vw;
+  background: rgb(163, 70, 163);
+  margin-left: -115%;
+  margin-top: 1rem;
+  display: none;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.75), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  overflow: auto;
+  &.active {
+    display: block;
+  }
+  @include media-min-tablet-landscape {
+    display: block;
+    background-color: inherit;
+    box-shadow: none;
+    margin: 0;
+    width: 100%;
+  }
+}
+
+.linksList {
+  list-style-type: none;
+  margin: 0;
+  padding: 0;
+
+  li {
+    box-sizing: border-box;
+    display: inline-block;
+    width: 33vw;
+    text-align: center;
+    @include media-min-tablet-landscape {
+      width: 33%;
+    }
+  }
+
+  a {
+    color: #ecdaec;
+    text-decoration: none;
+    font-weight: 700;
+  }
+}
