@@ -1,0 +1,66 @@
+@import "../../styles/mixins";
+
+.container {
+  display: inline-block;
+  text-align: center;
+  font-size: 1.25rem;
+  @include media-min-tablet-landscape {
+    font-size: 1.5rem;
+  }
+
+  a {
+    color: #ecdaec;
+    text-decoration: none;
+  }
+}
+
+.fancyLetter {
+  display: inline-block;
+  width: 2rem;
+  height: 2rem;
+  border-radius: 50%;
+  padding-top: 0.5rem;
+  box-sizing: border-box;
+  margin-left: -8px;
+  @include media-min-tablet-landscape {
+    width: 2.5rem;
+    height: 2.5rem;
+    padding-top: 0.75rem;
+  }
+}
+
+.t {
+  position: relative;
+  z-index: 3;
+  background-color: var(--color-purple);
+  margin-left: 0;
+}
+
+.r {
+  position: relative;
+  z-index: 2;
+  background-color: var(--color-green);
+}
+
+.i {
+  position: relative;
+  z-index: 3;
+  background-color: var(--color-red);
+}
+
+.v {
+  position: relative;
+  z-index: 2;
+  background-color: var(--color-blue);
+}
+
+.i2 {
+  background-color: var(--color-purple);
+}
+
+.a {
+  position: relative;
+  z-index: 2;
+  background-color: var(--color-yellow);
+  color: #3d3d3d;
+}

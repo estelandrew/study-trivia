@@ -35,6 +35,9 @@ body {
 body {
   color: #fff;
   background: var(--color-site-background);
+  width: 90%;
+  margin: 2rem auto;
+  color: #fff;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
 }
