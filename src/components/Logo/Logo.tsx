@@ -1,8 +1,6 @@
 import styles from "./Logo.module.scss";
-import { Luckiest_Guy } from "next/font/google";
 import Link from "next/link";
-
-const luckiestGuy = Luckiest_Guy({ weight: "400", subsets: ["latin"] });
+import { luckiestGuy } from "@utils/fonts";
 
 export const Logo = () => {
   return (

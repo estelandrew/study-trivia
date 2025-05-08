@@ -1,8 +1,9 @@
-@import "../../styles/mixins";
+@use "../../styles/mixins";
 
 .container {
   font-size: 1rem;
-  @include media-min-tablet-landscape {
+  position: relative;
+  @include mixins.media-min-tablet-landscape {
     font-size: 1.125rem;
     font-weight: 700;
   }
@@ -10,7 +11,6 @@
     font-size: 1.5rem;
     font-weight: 400;
   }
-  position: relative;
 }
 
 .menuButton {
@@ -29,7 +29,7 @@
       opacity: 1;
     }
   }
-  @include media-min-tablet-landscape {
+  @include mixins.media-min-tablet-landscape {
     display: none;
   }
 }
@@ -46,7 +46,7 @@
   &.active {
     display: block;
   }
-  @include media-min-tablet-landscape {
+  @include mixins.media-min-tablet-landscape {
     display: block;
     background-color: inherit;
     box-shadow: none;
@@ -65,7 +65,7 @@
     display: inline-block;
     width: 33vw;
     text-align: center;
-    @include media-min-tablet-landscape {
+    @include mixins.media-min-tablet-landscape {
       width: 33%;
     }
   }

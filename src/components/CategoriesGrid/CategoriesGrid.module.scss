@@ -1,0 +1,49 @@
+@use "../../styles/mixins";
+
+.container {
+  display: grid;
+  margin: 0 auto;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+  width: 75%;
+  max-width: 60rem;
+
+  @include mixins.media-min-tablet-portrait {
+    grid-template-columns: 1fr 1fr;
+    //width: 34.125rem;
+  }
+
+  @include mixins.media-min-desktop {
+    grid-template-columns: 1fr 1fr 1fr;
+    //width: 56.125rem;
+  }
+}
+
+.card {
+  width: 100%;
+  height: 8.625rem;
+  margin: 0 auto;
+  position: relative;
+  border-radius: var(--border-radius);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.75), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+  box-sizing: border-box;
+  padding-top: 3.1875rem;
+  text-align: center;
+  background-color: var(--color-blue);
+
+  a {
+    font-weight: 700;
+    font-size: 1.125rem;
+    text-decoration: none;
+    color: inherit;
+  }
+
+  a::before {
+    content: " ";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+  }
+}

@@ -1,18 +1,7 @@
-import type { Metadata } from "next";
-import { Rubik, Luckiest_Guy } from "next/font/google";
 import Header from "../components/Header/Header";
+import type { Metadata } from "next";
 import "./globals.css";
-
-const rubik = Rubik({
-  variable: "--rubik",
-  subsets: ["latin"],
-});
-
-const luckiestGuy = Luckiest_Guy({
-  variable: "--luckiest",
-  subsets: ["latin"],
-  weight: "400",
-});
+import { rubik } from "@utils/fonts";
 
 export const metadata: Metadata = {
   title: "Home | Study Trivia",
@@ -25,8 +14,8 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body className={`${luckiestGuy.variable} ${rubik.variable}`}>
+    <html lang="en" className={`${rubik.className}`}>
+      <body>
         <header>
           <Header />
         </header>
