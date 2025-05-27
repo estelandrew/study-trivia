@@ -1,0 +1,25 @@
+@use "../../styles/mixins";
+
+.container {
+  margin: 3.5rem 0 0 0;
+  font-size: 1.33rem;
+  h3 {
+    margin: 0;
+    padding: 0;
+  }
+}
+
+.text {
+  font-size: 1.33rem;
+  color: #ecdaec;
+  @include mixins.media-min-tablet-portrait {
+    font-size: 1.75rem;
+  }
+  @include mixins.media-min-desktop {
+    font-size: 2rem;
+  }
+}
+
+.description {
+  font-size: 1rem;
+}

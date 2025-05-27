@@ -58,3 +58,7 @@ a {
     color-scheme: dark;
   }
 }
+
+.history-and-culture {
+  background-color: var(--color-yellow);
+}
