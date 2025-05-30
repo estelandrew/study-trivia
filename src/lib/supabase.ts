@@ -62,3 +62,12 @@ export const getRandomCard = async () => {
     `);
   return card;
 };
+
+export const getDeckLabels = async () => {
+  const { data } = await supabase.from("labels").select(`
+    id,
+    name,
+    decks ( id, name, slug, description )
+  `);
+  return data;
+};
