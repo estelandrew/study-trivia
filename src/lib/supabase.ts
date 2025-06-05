@@ -1,4 +1,4 @@
-import supabase from "../../utils/supabase";
+import supabase from "@utils/supabase";
 
 export const getAllDecks = async () => {
   const { data: decks } = await supabase.from("decks").select(`
