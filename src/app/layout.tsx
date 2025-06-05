@@ -1,4 +1,5 @@
 import Header from "../components/Header/Header";
+import AuthContextProvider from "@/context/AuthContext";
 import type { Metadata } from "next";
 import "./globals.css";
 import { rubik } from "@utils/fonts";
@@ -16,10 +17,12 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${rubik.className}`}>
       <body>
-        <header>
-          <Header />
-        </header>
-        {children}
+        <AuthContextProvider>
+          <header>
+            <Header />
+          </header>
+          {children}
+        </AuthContextProvider>
       </body>
     </html>
   );
