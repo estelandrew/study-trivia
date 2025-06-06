@@ -1,6 +1,6 @@
+import Logo from "@components/Logo/Logo";
+import Nav from "@components/Nav/Nav";
 import styles from "./Header.module.scss";
-import Logo from "../Logo/Logo";
-import Nav from "../Nav/Nav";
 
 const Header = () => {
   return (

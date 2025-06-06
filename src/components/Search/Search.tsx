@@ -1,5 +1,5 @@
-import styles from "./Search.module.scss";
 import { FaSearch } from "react-icons/fa";
+import styles from "./Search.module.scss";
 
 const Search = () => {
   return (

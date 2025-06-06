@@ -1,5 +1,4 @@
 import { getDeckBySlug } from "@lib/supabase";
-//import DeckPage from "./_components/DeckPage";
 
 export default async function Page({
   params,
@@ -8,7 +7,6 @@ export default async function Page({
 }) {
   const { slug } = await params;
   const deck = await getDeckBySlug(slug);
-  console.log(">>> deck: ", deck);
   return (
     <>
       {deck?.name && deck.cards.length && (
