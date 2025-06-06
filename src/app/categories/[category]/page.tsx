@@ -1,6 +1,6 @@
-import { getDecksByCategorySlug } from "@lib/supabase";
 import DeckCard from "@components/DeckCard/DeckCard";
-import { PageHeader } from "@components/PageHeader/PageHeader";
+import PageHeader from "@components/PageHeader/PageHeader";
+import { getDecksByCategorySlug } from "@lib/supabase";
 
 export default async function Page({
   params,
@@ -10,7 +10,6 @@ export default async function Page({
   const { category } = await params;
   const decks = await getDecksByCategorySlug(category);
 
-  console.log(">>>> decks: ", category);
   return (
     <>
       <PageHeader
