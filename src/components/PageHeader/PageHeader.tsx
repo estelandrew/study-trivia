@@ -6,7 +6,7 @@ type Props = {
   categorySlug?: string;
 };
 
-export const PageHeader = ({ text, description, categorySlug }: Props) => {
+const PageHeader = ({ text, description, categorySlug }: Props) => {
   return (
     <div className={`${styles.container} ${styles[`${categorySlug}`]}`}>
       <h3 className={`${styles.text}`}>{text}</h3>

@@ -1,12 +1,12 @@
-import styles from "./PageSection.module.scss";
 import { luckiestGuy } from "@utils/fonts";
+import styles from "./PageSection.module.scss";
 
 type Props = {
   children: React.ReactNode;
   headerText: string;
 };
 
-export const PageSection = ({ children, headerText }: Props) => {
+const PageSection = ({ children, headerText }: Props) => {
   return (
     <div className={`${styles.container}`}>
       <h3 className={`${styles.header} ${luckiestGuy.className}`}>

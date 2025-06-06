@@ -7,13 +7,13 @@ import {
   useEffect,
   ReactNode,
 } from "react";
-import supabase from "@utils/supabase";
 import { Session, User } from "@supabase/supabase-js";
+import supabase from "@utils/supabase";
 
-interface AuthContextType {
+type AuthContextType = {
   user: User | null;
   session: Session | null;
-}
+};
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
@@ -31,7 +31,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
     });
 
     const { data: subscription } = supabase.auth.onAuthStateChange(
-      (_event, session) => {
+      (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
       }
@@ -51,8 +51,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
 
 export const useAuthContext = () => {
   const context = useContext(AuthContext);
-  if (context === undefined) {
-    throw new Error("useAuth must be used within an AuthProvider");
+  if (!context) {
+    throw new Error("useAuth must be used within an AuthContextProvider");
   }
   return context;
 };

@@ -1,17 +1,15 @@
 "use client";
 
 import { useRef } from "react";
+import { GiHamburgerMenu } from "react-icons/gi";
+import Link from "next/link";
 import useAuth from "@/hooks/useAuth";
 import { useAuthContext } from "@/context/AuthContext";
 import styles from "./Nav.module.scss";
-import { GiHamburgerMenu } from "react-icons/gi";
-import Link from "next/link";
 
 const Nav = () => {
   const { signOut } = useAuth();
   const { session } = useAuthContext();
-  //const [hasSession, setHasSession] = useState<boolean>(false);
-  //const [isSignedIn, setIsSignedIn] = useState<boolean>(false);
   const menuRef = useRef<HTMLDivElement>(null);
   const linksContainerRef = useRef<HTMLDivElement>(null);
 
@@ -25,20 +23,6 @@ const Nav = () => {
       linksContainerRef.current?.classList.remove(styles.active);
     }
   };
-
-  // useEffect(() => {
-  //   const fetchSession = async () => {
-  //     const {
-  //       data: { session },
-  //     } = await getSession();
-  //     setHasSession(!!session);
-  //   };
-  //   fetchSession();
-  // }, [pathname, getSession]);
-
-  // useEffect(() => {
-  //   setIsSignedIn(hasSession);
-  // }, [hasSession]);
 
   return (
     <div className={styles.container}>

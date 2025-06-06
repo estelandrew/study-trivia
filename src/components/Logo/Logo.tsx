@@ -2,7 +2,7 @@ import styles from "./Logo.module.scss";
 import Link from "next/link";
 import { luckiestGuy } from "@utils/fonts";
 
-export const Logo = () => {
+const Logo = () => {
   return (
     <div className={`${luckiestGuy.className} ${styles.container}`}>
       <Link href="/">
