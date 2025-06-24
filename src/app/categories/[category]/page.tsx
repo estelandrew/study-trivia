@@ -1,5 +1,5 @@
-import DeckCard from "@components/DeckCard/DeckCard";
-import PageHeader from "@components/PageHeader/PageHeader";
+import DeckCardsGrid from "@components/DeckCardsGrid/DeckCardsGrid";
+import PageSection from "@/components/PageSection/PageSection";
 import { getDecksByCategorySlug } from "@lib/supabase";
 
 export default async function Page({
@@ -11,22 +11,8 @@ export default async function Page({
   const decks = await getDecksByCategorySlug(category);
 
   return (
-    <>
-      <PageHeader
-        text={`Category: ${decks?.name}`}
-        categorySlug={decks?.slug}
-      />
-      {decks?.decks.map((deck) => {
-        return (
-          <DeckCard
-            key={deck.id}
-            category={decks.slug}
-            name={deck.name}
-            description={deck.description}
-            slug={deck.slug}
-          />
-        );
-      })}
-    </>
+    <PageSection headerText={decks?.name}>
+      <DeckCardsGrid data={decks} category={decks?.slug} />
+    </PageSection>
   );
 }

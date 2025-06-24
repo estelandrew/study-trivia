@@ -1,0 +1,16 @@
+@use "../../styles/mixins";
+
+.container {
+  display: grid;
+  margin: 0 auto;
+  gap: 2rem;
+  grid-template-columns: 1fr;
+
+  @include mixins.media-min-tablet-portrait {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  @include mixins.media-min-desktop {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+}
