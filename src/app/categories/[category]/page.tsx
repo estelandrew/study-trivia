@@ -1,6 +1,6 @@
-import DeckCardsGrid from "@components/DeckCardsGrid/DeckCardsGrid";
+import CollectionCardsGrid from "@/components/CollectionCardsGrid/CollectionCardsGrid";
 import PageSection from "@/components/PageSection/PageSection";
-import { getDecksByCategorySlug } from "@lib/supabase";
+import { getDecksByCategorySlug } from "@/lib/api";
 
 export default async function Page({
   params,
@@ -8,11 +8,13 @@ export default async function Page({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-  const decks = await getDecksByCategorySlug(category);
+  const collections = await getDecksByCategorySlug(category);
 
   return (
-    <PageSection headerText={decks?.name}>
-      <DeckCardsGrid data={decks} category={decks?.slug} />
+    <PageSection headerText={collections?.name}>
+      {collections && (
+        <CollectionCardsGrid categoryJoinCollections={collections} />
+      )}
     </PageSection>
   );
 }

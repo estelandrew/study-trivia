@@ -1,4 +1,4 @@
-import { getDeckLabels } from "@/lib/supabase";
+import { getDeckLabels } from "@/lib/api";
 
 export const revalidate = 0;
 

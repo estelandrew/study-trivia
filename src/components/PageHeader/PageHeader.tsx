@@ -1,10 +1,5 @@
+import { Props } from "./PageHeader.types";
 import styles from "./PageHeader.module.scss";
-
-type Props = {
-  text: string;
-  description?: string;
-  categorySlug?: string;
-};
 
 const PageHeader = ({ text, description, categorySlug }: Props) => {
   return (
