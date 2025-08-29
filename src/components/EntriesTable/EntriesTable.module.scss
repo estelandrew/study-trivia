@@ -1,0 +1,21 @@
+.table {
+  border-collapse: collapse;
+  th,
+  td {
+    border: 1px solid #666;
+    padding: 0.5rem;
+  }
+  th:first-child,
+  td:first-child {
+    width: 50%; /* Set the first column to 20% width */
+  }
+  th:nth-child(2),
+  td:nth-child(2) {
+    width: 30%; /* Set the second column to 50% width */
+    text-align: center;
+  }
+  th:nth-child(4),
+  td:nth-child(4) {
+    text-align: center;
+  }
+}

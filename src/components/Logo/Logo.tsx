@@ -1,6 +1,6 @@
-import styles from "./Logo.module.scss";
 import Link from "next/link";
 import { luckiestGuy } from "@utils/fonts";
+import styles from "./Logo.module.scss";
 
 const Logo = () => {
   return (

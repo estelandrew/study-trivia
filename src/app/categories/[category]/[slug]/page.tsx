@@ -1,4 +1,5 @@
-import { getDeckBySlug } from "@lib/supabase";
+import EntriesTable from "@/components/EntriesTable/EntriesTable";
+import { getDeckBySlug } from "@/lib/api";
 
 export default async function Page({
   params,
@@ -6,19 +7,13 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const deck = await getDeckBySlug(slug);
+  const collectionJoinEntries = await getDeckBySlug(slug);
   return (
     <>
-      {deck?.name && deck.cards.length && (
-        <div>
-          {deck.cards.map((card) => {
-            return (
-              <div key={card.id}>
-                {card.clue}: {card.answer}
-              </div>
-            );
-          })}
-        </div>
+      {collectionJoinEntries ? (
+        <EntriesTable collectionJoinEntries={collectionJoinEntries} />
+      ) : (
+        <p>No collection found</p>
       )}
     </>
   );

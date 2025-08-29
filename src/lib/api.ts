@@ -29,7 +29,7 @@ export const getDeckBySlug = async (slug: string) => {
     name,
     description,
     categories (slug),
-    cards (id, clue, answer)
+    cards (id, clue, group, answer)
   `
     )
     .eq("slug", slug)
@@ -45,6 +45,7 @@ export const getDecksByCategorySlug = async (slug: string) => {
     id,
     slug,
     name,
+    description,
     decks (id, slug, name, description)
   `
     )

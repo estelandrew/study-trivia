@@ -1,10 +1,6 @@
 import { luckiestGuy } from "@utils/fonts";
+import { Props } from "./PageSection.types";
 import styles from "./PageSection.module.scss";
-
-type Props = {
-  children: React.ReactNode;
-  headerText: string;
-};
 
 const PageSection = ({ children, headerText }: Props) => {
   return (

@@ -1,4 +1,4 @@
-import { getAllCategories } from "@/lib/supabase";
+import { getAllCategories } from "@/lib/api";
 import Link from "next/link";
 import styles from "./CategoriesGrid.module.scss";
 
