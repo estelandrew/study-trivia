@@ -1,16 +1,16 @@
 import supabase from "@utils/supabase";
 
-export const getAllDecks = async () => {
-  const { data: decks } = await supabase.from("decks").select(`
+export const getCollections = async () => {
+  const { data: collections } = await supabase.from("collections").select(`
     id,
     name,
     description,
-    cards (id, clue, answer)
+    entries (id, clue, answer)
   `);
-  return decks;
+  return collections;
 };
 
-export const getAllCategories = async () => {
+export const getCategories = async () => {
   const { data: categories } = await supabase.from("categories").select(`
     id,
     slug,
@@ -19,9 +19,9 @@ export const getAllCategories = async () => {
   return categories;
 };
 
-export const getDeckBySlug = async (slug: string) => {
-  const { data: decks } = await supabase
-    .from("decks")
+export const getCollectionBySlug = async (slug: string) => {
+  const { data: collections } = await supabase
+    .from("collections")
     .select(
       `
     id,
@@ -29,16 +29,16 @@ export const getDeckBySlug = async (slug: string) => {
     name,
     description,
     categories (slug),
-    cards (id, clue, group, answer)
+    entries (id, clue, group, answer)
   `
     )
     .eq("slug", slug)
     .maybeSingle();
-  return decks;
+  return collections;
 };
 
-export const getDecksByCategorySlug = async (slug: string) => {
-  const { data: decks } = await supabase
+export const getCollectionsByCategorySlug = async (slug: string) => {
+  const { data: collections } = await supabase
     .from("categories")
     .select(
       `
@@ -46,29 +46,19 @@ export const getDecksByCategorySlug = async (slug: string) => {
     slug,
     name,
     description,
-    decks (id, slug, name, description)
+    collections (id, slug, name, description)
   `
     )
     .eq("slug", slug)
     .maybeSingle();
-  return decks;
+  return collections;
 };
 
-export const getRandomCard = async () => {
-  const { data: card } = await supabase.from("decks").select(`
-      id,
-      name,
-      description,
-      cards (id, clue, answer)
-    `);
-  return card;
-};
-
-export const getDeckLabels = async () => {
-  const { data } = await supabase.from("labels").select(`
-    id,
-    name,
-    decks ( id, name, slug, description )
-  `);
-  return data;
-};
+// export const getCollectionsLabels = async () => {
+//   const { data } = await supabase.from("labels").select(`
+//     id,
+//     name,
+//     decks ( id, name, slug, description )
+//   `);
+//   return data;
+// };

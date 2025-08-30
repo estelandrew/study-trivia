@@ -1,5 +1,5 @@
 import EntriesTable from "@/components/EntriesTable/EntriesTable";
-import { getDeckBySlug } from "@/lib/api";
+import { getCollectionBySlug } from "@/lib/api";
 
 export default async function Page({
   params,
@@ -7,7 +7,7 @@ export default async function Page({
   params: Promise<{ slug: string }>;
 }) {
   const { slug } = await params;
-  const collectionJoinEntries = await getDeckBySlug(slug);
+  const collectionJoinEntries = await getCollectionBySlug(slug);
   return (
     <>
       {collectionJoinEntries ? (

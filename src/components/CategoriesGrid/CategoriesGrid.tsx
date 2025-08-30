@@ -1,11 +1,11 @@
-import { getAllCategories } from "@/lib/api";
 import Link from "next/link";
+import { getCategories } from "@/lib/api";
 import styles from "./CategoriesGrid.module.scss";
 
 export const revalidate = 0;
 
 const CategoriesGrid = async () => {
-  const categories = await getAllCategories();
+  const categories = await getCategories();
 
   return (
     <div className={`${styles.container}`}>

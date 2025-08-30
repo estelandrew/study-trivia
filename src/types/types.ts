@@ -19,6 +19,6 @@ export type Category = {
   name: string;
 };
 
-export type CategoryJoinCollections = Category & { decks: Collection[] };
+export type CategoryJoinCollections = Category & { collections: Collection[] };
 
-export type CollectionJoinEntries = Collection & { cards: Entry[] };
+export type CollectionJoinEntries = Collection & { entries: Entry[] };
