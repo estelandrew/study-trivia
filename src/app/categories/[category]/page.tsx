@@ -1,6 +1,6 @@
 import CollectionCardsGrid from "@/components/CollectionCardsGrid/CollectionCardsGrid";
 import PageSection from "@/components/PageSection/PageSection";
-import { getDecksByCategorySlug } from "@/lib/api";
+import { getCollectionsByCategorySlug } from "@/lib/api";
 
 export default async function Page({
   params,
@@ -8,7 +8,7 @@ export default async function Page({
   params: Promise<{ category: string }>;
 }) {
   const { category } = await params;
-  const collections = await getDecksByCategorySlug(category);
+  const collections = await getCollectionsByCategorySlug(category);
 
   return (
     <PageSection headerText={collections?.name}>

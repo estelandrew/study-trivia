@@ -29,7 +29,7 @@ const columns = [
 ];
 
 const EntriesTable = ({ collectionJoinEntries }: Props) => {
-  const [data] = useState<Entry[]>(collectionJoinEntries.cards);
+  const [data] = useState<Entry[]>(collectionJoinEntries.entries);
   const table = useReactTable({
     data,
     columns,

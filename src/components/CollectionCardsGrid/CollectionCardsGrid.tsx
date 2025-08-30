@@ -7,7 +7,7 @@ export const revalidate = 0;
 
 const CollectionCardsGrid = async ({ categoryJoinCollections }: Props) => {
   const category = categoryJoinCollections.name;
-  const collections = categoryJoinCollections.decks;
+  const collections = categoryJoinCollections.collections;
   return (
     <div className={`${styles.container}`}>
       {collections?.map((collection: Collection, i: number) => {
