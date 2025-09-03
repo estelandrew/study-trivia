@@ -1,0 +1,21 @@
+.container {
+  cursor: pointer;
+}
+
+.answerCell {
+  position: relative;
+}
+
+.answer {
+  font-style: italic;
+}
+
+.concealer {
+  color: var(--color-purple-tinted);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.hidden {
+  display: none;
+}
