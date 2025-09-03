@@ -2,7 +2,6 @@
 export type Entry = {
   id: number;
   clue: string;
-  group: string;
   answer: string;
 };
 

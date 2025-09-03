@@ -29,7 +29,7 @@ export const getCollectionBySlug = async (slug: string) => {
     name,
     description,
     categories (slug),
-    entries (id, clue, group, answer)
+    entries (id, clue, answer)
   `
     )
     .eq("slug", slug)

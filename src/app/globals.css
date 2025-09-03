@@ -62,3 +62,7 @@ a {
 .history-and-culture {
   background-color: var(--color-yellow);
 }
+
+.main-content-container {
+  padding-top: 4rem;
+}

@@ -1,6 +1,8 @@
 import EntriesTable from "@/components/EntriesTable/EntriesTable";
 import { getCollectionBySlug } from "@/lib/api";
 
+export const revalidate = 0;
+
 export default async function Page({
   params,
 }: {

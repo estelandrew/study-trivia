@@ -21,7 +21,10 @@ export default function RootLayout({
           <header>
             <Header />
           </header>
-          {children}
+          <main>
+            <div className="main-content-container">{children}</div>
+          </main>
+          <footer>[Footer]</footer>
         </AuthContextProvider>
       </body>
     </html>

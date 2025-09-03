@@ -1,73 +1,39 @@
 "use client";
 
-import { useState } from "react";
-import {
-  createColumnHelper,
-  flexRender,
-  getCoreRowModel,
-  useReactTable,
-} from "@tanstack/react-table";
-import { Entry } from "@/types/types";
+import { luckiestGuy } from "@utils/fonts";
+import EntryAnswer from "../EntryAnswer/EntryAnswer";
 import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";
 
-const columnHelper = createColumnHelper<Entry>();
-
-const columns = [
-  columnHelper.accessor("clue", {
-    header: () => "Clue",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("answer", {
-    header: () => "Answer",
-    cell: (info) => info.getValue(),
-  }),
-  columnHelper.accessor("group", {
-    header: () => "Group",
-    cell: (info) => info.renderValue(),
-  }),
-];
-
 const EntriesTable = ({ collectionJoinEntries }: Props) => {
-  const [data] = useState<Entry[]>(collectionJoinEntries.entries);
-  const table = useReactTable({
-    data,
-    columns,
-    getCoreRowModel: getCoreRowModel(),
-  });
-
+  console.log({ collectionJoinEntries });
   return (
-    <>
+    <div className={styles.container}>
+      <h2 className={`${luckiestGuy.className}`}>
+        {collectionJoinEntries.name}
+      </h2>
+      <div className={styles.description}>
+        {collectionJoinEntries.description}
+      </div>
       <table className={styles.table}>
         <thead>
-          {table.getHeaderGroups().map((headerGroup) => (
-            <tr key={headerGroup.id}>
-              {headerGroup.headers.map((header) => (
-                <th key={header.id}>
-                  {header.isPlaceholder
-                    ? null
-                    : flexRender(
-                        header.column.columnDef.header,
-                        header.getContext()
-                      )}
-                </th>
-              ))}
-            </tr>
-          ))}
+          <tr>
+            <th>Clue</th>
+            <th>Answer</th>
+            <th>Learned</th>
+          </tr>
         </thead>
         <tbody>
-          {table.getRowModel().rows.map((row) => (
-            <tr key={row.id}>
-              {row.getVisibleCells().map((cell) => (
-                <td key={cell.id}>
-                  {flexRender(cell.column.columnDef.cell, cell.getContext())}
-                </td>
-              ))}
+          {collectionJoinEntries.entries.map((entry, i) => (
+            <tr key={i}>
+              <td>{entry.clue}</td>
+              <EntryAnswer answer={entry.answer} />
+              <td>Yes</td>
             </tr>
           ))}
         </tbody>
       </table>
-    </>
+    </div>
   );
 };
 
