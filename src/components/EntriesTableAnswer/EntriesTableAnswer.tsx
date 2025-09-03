@@ -1,9 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import styles from "./EntryAnswer.module.scss";
+import styles from "./EntriesTableAnswer.module.scss";
 
-const EntryAnswer = ({ answer }: { answer: string }) => {
+const EntriesTableAnswer = ({ answer }: { answer: string }) => {
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
   const toggleRevealed = () => {
     setIsRevealed(!isRevealed);
@@ -19,4 +19,4 @@ const EntryAnswer = ({ answer }: { answer: string }) => {
   );
 };
 
-export default EntryAnswer;
+export default EntriesTableAnswer;

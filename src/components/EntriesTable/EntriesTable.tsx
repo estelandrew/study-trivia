@@ -1,7 +1,7 @@
 "use client";
 
 import { luckiestGuy } from "@utils/fonts";
-import EntryAnswer from "../EntryAnswer/EntryAnswer";
+import EntriesTableRow from "../EntriesTableRow/EntriesTableRow";
 import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";
 
@@ -25,11 +25,7 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
         </thead>
         <tbody>
           {collectionJoinEntries.entries.map((entry, i) => (
-            <tr key={i}>
-              <td>{entry.clue}</td>
-              <EntryAnswer answer={entry.answer} />
-              <td>Yes</td>
-            </tr>
+            <EntriesTableRow key={i} clue={entry.clue} answer={entry.answer} />
           ))}
         </tbody>
       </table>
