@@ -1,0 +1,19 @@
+.learnedCell {
+  font-size: 1.25rem;
+  cursor: pointer;
+
+  .notLearnedCheck:hover {
+    color: #fff;
+  }
+}
+
+.isLearnedCheck {
+  color: var(--color-green);
+  svg {
+    stroke-width: 5;
+  }
+}
+
+.notLearnedCheck {
+  color: #888;
+}
