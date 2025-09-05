@@ -6,7 +6,6 @@ import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";
 
 const EntriesTable = ({ collectionJoinEntries }: Props) => {
-  console.log({ collectionJoinEntries });
   return (
     <div className={styles.container}>
       <h2 className={`${luckiestGuy.className}`}>
@@ -19,8 +18,8 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
         <thead>
           <tr>
             <th>Clue</th>
-            <th>Answer</th>
-            <th>Learned</th>
+            <th colSpan={2}>Answer</th>
+            {/* <th>Learned</th> */}
           </tr>
         </thead>
         <tbody>
