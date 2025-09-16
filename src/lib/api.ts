@@ -34,6 +34,7 @@ export const getCollectionBySlug = async (slug: string) => {
     )
     .eq("slug", slug)
     .maybeSingle();
+  console.log({ collections });
   return collections;
 };
 
