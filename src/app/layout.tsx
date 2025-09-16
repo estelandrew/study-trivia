@@ -1,5 +1,6 @@
 import Header from "../components/Header/Header";
 import AuthContextProvider from "@/context/AuthContext";
+import UserLearnedEntriesContextProvider from "@/context/UserLearnedEntriesContext";
 import type { Metadata } from "next";
 import "./globals.css";
 import { rubik } from "@utils/fonts";
@@ -18,13 +19,15 @@ export default function RootLayout({
     <html lang="en" className={`${rubik.className}`}>
       <body>
         <AuthContextProvider>
-          <header>
-            <Header />
-          </header>
-          <main>
-            <div className="main-content-container">{children}</div>
-          </main>
-          <footer>[Footer]</footer>
+          <UserLearnedEntriesContextProvider>
+            <header>
+              <Header />
+            </header>
+            <main>
+              <div className="main-content-container">{children}</div>
+            </main>
+            <footer>[Footer]</footer>
+          </UserLearnedEntriesContextProvider>
         </AuthContextProvider>
       </body>
     </html>

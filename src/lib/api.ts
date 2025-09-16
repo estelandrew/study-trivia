@@ -54,6 +54,14 @@ export const getCollectionsByCategorySlug = async (slug: string) => {
   return collections;
 };
 
+export const getUserLearnedEntries = async (userId: string) => {
+  const { data: learnedEntries } = await supabase
+    .from("users_entries_learned")
+    .select("entry_id,collection_id")
+    .eq("user_id", userId);
+  return learnedEntries;
+};
+
 // export const getCollectionsLabels = async () => {
 //   const { data } = await supabase.from("labels").select(`
 //     id,

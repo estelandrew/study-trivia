@@ -1,10 +1,12 @@
 "use client";
 
+import { useState } from "react";
+//import { useUserLearnedEntriesContext } from "@/context/UserLearnedEntriesContext";
 import { Props } from "./EntriesTableAnswer.types";
 import styles from "./EntriesTableAnswer.module.scss";
 
-const EntriesTableAnswer = ({ answer, isRevealedState }: Props) => {
-  const [isRevealed, setIsRevealed] = isRevealedState;
+const EntriesTableAnswer = ({ answer }: Props) => {
+  const [isRevealed, setIsRevealed] = useState<boolean>(false);
   const toggleRevealed = () => {
     setIsRevealed(!isRevealed);
   };

@@ -24,7 +24,12 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
         </thead>
         <tbody>
           {collectionJoinEntries.entries.map((entry, i) => (
-            <EntriesTableRow key={i} clue={entry.clue} answer={entry.answer} />
+            <EntriesTableRow
+              key={i}
+              clue={entry.clue}
+              answer={entry.answer}
+              collectionId={collectionJoinEntries.id}
+            />
           ))}
         </tbody>
       </table>
