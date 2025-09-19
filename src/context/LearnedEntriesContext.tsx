@@ -9,7 +9,7 @@ import {
   useContext,
 } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { getUserLearnedEntries } from "@/lib/api";
+import { getLearnedEntries } from "@/lib/api";
 
 type LearnedEntriesType =
   | {
@@ -18,20 +18,23 @@ type LearnedEntriesType =
     }[]
   | null;
 
-type UserLearnedEntriesContextType = {
-  userLearnedEntries: LearnedEntriesType;
+type LearnedEntriesContextType = {
+  learnedEntries: LearnedEntriesType;
   toggleIsEntryLearned: () => void;
 };
 
-const UserLearnedEntriesContext = createContext({});
+const LearnedEntriesContext = createContext<LearnedEntriesContextType>({
+  learnedEntries: [],
+  toggleIsEntryLearned: () => {},
+});
 
-const UserLearnedEntriesContextProvider = ({
+const LearnedEntriesContextProvider = ({
   children,
 }: {
   children: React.ReactNode;
 }) => {
   const { user, session } = useAuthContext();
-  const [userLearnedEntries, setUserLearnedEntries] =
+  const [learnedEntries, setLearnedEntries] =
     useState<LearnedEntriesType>(null);
 
   // create function that toggles a entry as learned or unlearned
@@ -41,16 +44,16 @@ const UserLearnedEntriesContextProvider = ({
     // toggle
   }, []);
 
-  const contextValue: UserLearnedEntriesContextType = useMemo(
-    () => ({ userLearnedEntries, toggleIsEntryLearned }),
-    [userLearnedEntries, toggleIsEntryLearned]
+  const contextValue: LearnedEntriesContextType = useMemo(
+    () => ({ learnedEntries, toggleIsEntryLearned }),
+    [learnedEntries, toggleIsEntryLearned]
   );
 
   useEffect(() => {
     const fetchData = async (userId: string) => {
       if (user?.id) {
-        const data = await getUserLearnedEntries(userId);
-        setUserLearnedEntries(data);
+        const data = await getLearnedEntries(userId);
+        setLearnedEntries(data);
         return data;
       } else {
         // TODO : check localstorage and return if exists
@@ -64,18 +67,18 @@ const UserLearnedEntriesContextProvider = ({
   }, [user, session]);
 
   return (
-    <UserLearnedEntriesContext.Provider value={contextValue}>
+    <LearnedEntriesContext.Provider value={contextValue}>
       {children}
-    </UserLearnedEntriesContext.Provider>
+    </LearnedEntriesContext.Provider>
   );
 };
 
-export const useUserLearnedEntriesContext = () => {
-  const context = useContext(UserLearnedEntriesContext);
+export const useLearnedEntriesContext = () => {
+  const context = useContext<LearnedEntriesContextType>(LearnedEntriesContext);
   if (!context) {
     throw new Error("useAuth must be used within an AuthContextProvider");
   }
   return context;
 };
 
-export default UserLearnedEntriesContextProvider;
+export default LearnedEntriesContextProvider;

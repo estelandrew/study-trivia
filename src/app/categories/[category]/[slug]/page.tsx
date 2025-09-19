@@ -10,7 +10,6 @@ export default async function Page({
 }) {
   const { slug } = await params;
   const collectionJoinEntries = await getCollectionBySlug(slug);
-  console.log({ collectionJoinEntries });
   return (
     <>
       {collectionJoinEntries ? (
