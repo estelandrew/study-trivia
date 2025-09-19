@@ -29,7 +29,7 @@ export const getCollectionBySlug = async (slug: string) => {
     name,
     description,
     categories (slug),
-    entries (id, clue, answer)
+    entries:entries!entries_collection_id_fkey (id, clue, answer)
   `
     )
     .eq("slug", slug)
@@ -52,6 +52,14 @@ export const getCollectionsByCategorySlug = async (slug: string) => {
     .eq("slug", slug)
     .maybeSingle();
   return collections;
+};
+
+export const getLearnedEntries = async (userId: string) => {
+  const { data: learnedEntries } = await supabase
+    .from("learned_entries")
+    .select("entry_id,collection_id")
+    .eq("user_id", userId);
+  return learnedEntries;
 };
 
 // export const getCollectionsLabels = async () => {
