@@ -9,18 +9,25 @@ import {
   useContext,
 } from "react";
 import { useAuthContext } from "@/context/AuthContext";
-import { getLearnedEntries } from "@/lib/api";
+import {
+  getLearnedEntries,
+  insertLearnedEntry,
+  deleteLearnedEntry,
+} from "@/lib/api";
 
 type LearnedEntriesType =
   | {
       entry_id: number;
       collection_id: number;
-    }[]
-  | null;
+    }[];
 
 type LearnedEntriesContextType = {
   learnedEntries: LearnedEntriesType;
-  toggleIsEntryLearned: () => void;
+  toggleIsEntryLearned: (
+    isLearned: boolean,
+    entryId: number,
+    collectionId: number
+  ) => void;
 };
 
 const LearnedEntriesContext = createContext<LearnedEntriesContextType>({
@@ -34,15 +41,35 @@ const LearnedEntriesContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { user, session } = useAuthContext();
-  const [learnedEntries, setLearnedEntries] =
-    useState<LearnedEntriesType>(null);
+  const [learnedEntries, setLearnedEntries] = useState<LearnedEntriesType>([]);
 
-  // create function that toggles a entry as learned or unlearned
-  // update state first, then update  database (if db insert fails, roll back UI state and throw error)
-  // use useCallback so as to not have necessary rerenders
-  const toggleIsEntryLearned = useCallback(() => {
-    // toggle
-  }, []);
+  const toggleIsEntryLearned = useCallback(
+    (isLearned: boolean, entryId: number, collectionId: number) => {
+      console.log("toggle triggered");
+      // optimistically update the UI
+      setLearnedEntries((prev) => {
+        if (isLearned) {
+          const newState = prev.filter(
+            (entry) =>
+              entry.entry_id !== entryId && entry.collection_id !== collectionId
+          );
+          return newState;
+        } else {
+          return [...prev, { entry_id: entryId, collection_id: collectionId }];
+        }
+      });
+
+      // backend update
+      if (isLearned) {
+        deleteLearnedEntry(entryId, collectionId);
+      } else {
+        if (user?.id) {
+          insertLearnedEntry(entryId, collectionId, user?.id);
+        }
+      }
+    },
+    [user?.id]
+  );
 
   const contextValue: LearnedEntriesContextType = useMemo(
     () => ({ learnedEntries, toggleIsEntryLearned }),
@@ -51,7 +78,7 @@ const LearnedEntriesContextProvider = ({
 
   useEffect(() => {
     const fetchData = async (userId: string) => {
-      if (user?.id) {
+      if (userId) {
         const data = await getLearnedEntries(userId);
         setLearnedEntries(data);
         return data;

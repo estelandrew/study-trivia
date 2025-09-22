@@ -7,18 +7,9 @@ import { Props } from "./EntriesTableRow.types";
 import styles from "./EntriesTableRow.module.scss";
 
 const EntriesTableRow = ({ clue, answer, collectionId, entryId }: Props) => {
-  const { learnedEntries } = useLearnedEntriesContext();
+  const { learnedEntries, toggleIsEntryLearned } = useLearnedEntriesContext();
   const [isLearned, setIsLearned] = useState<boolean>(false);
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
-  const toggleIsLearned = () => {
-    setIsLearned(!isLearned);
-  };
-
-  useEffect(() => {
-    if (isLearned) {
-      setIsRevealed(true);
-    }
-  }, [isLearned]);
 
   useEffect(() => {
     if (learnedEntries?.length) {
@@ -29,6 +20,11 @@ const EntriesTableRow = ({ clue, answer, collectionId, entryId }: Props) => {
     }
   }, [learnedEntries, collectionId, entryId]);
 
+  const handleToggleIsEntryLearned = () => {
+    toggleIsEntryLearned(isLearned, entryId, collectionId);
+    setIsLearned(!isLearned);
+  };
+
   return (
     <tr>
       <td>{clue}</td>
@@ -37,7 +33,7 @@ const EntriesTableRow = ({ clue, answer, collectionId, entryId }: Props) => {
         isRevealedState={[isRevealed, setIsRevealed]}
         collectionId={collectionId}
       />
-      <td className={styles.learnedCell} onClick={toggleIsLearned}>
+      <td className={styles.learnedCell} onClick={handleToggleIsEntryLearned}>
         {isLearned ? (
           <div className={styles.isLearnedCheck}>
             <FiCheck />
