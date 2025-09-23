@@ -16,7 +16,10 @@ const EntriesTableRow = ({ clue, answer, collectionId, entryId }: Props) => {
       const matchingEntry = learnedEntries.filter(
         (x) => x["collection_id"] === collectionId && x["entry_id"] === entryId
       )[0];
-      if (matchingEntry) setIsLearned(true);
+      if (matchingEntry) {
+        setIsLearned(true);
+        setIsRevealed(true);
+      }
     }
   }, [learnedEntries, collectionId, entryId]);
 
