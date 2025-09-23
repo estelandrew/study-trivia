@@ -19,7 +19,8 @@ type LearnedEntriesType =
   | {
       entry_id: number;
       collection_id: number;
-    }[];
+    }[]
+  | null;
 
 type LearnedEntriesContextType = {
   learnedEntries: LearnedEntriesType;
@@ -31,7 +32,7 @@ type LearnedEntriesContextType = {
 };
 
 const LearnedEntriesContext = createContext<LearnedEntriesContextType>({
-  learnedEntries: [],
+  learnedEntries: null,
   toggleIsEntryLearned: () => {},
 });
 
@@ -41,25 +42,29 @@ const LearnedEntriesContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { user, session } = useAuthContext();
-  const [learnedEntries, setLearnedEntries] = useState<LearnedEntriesType>([]);
+  const [learnedEntries, setLearnedEntries] =
+    useState<LearnedEntriesType>(null);
 
+  // Variable isLearned below refers to the current state of the entry at the time when the user clicks to mark as learned
   const toggleIsEntryLearned = useCallback(
     (isLearned: boolean, entryId: number, collectionId: number) => {
-      console.log("toggle triggered");
       // optimistically update the UI
       setLearnedEntries((prev) => {
         if (isLearned) {
-          const newState = prev.filter(
+          const newState = prev?.filter(
             (entry) =>
               entry.entry_id !== entryId && entry.collection_id !== collectionId
           );
-          return newState;
+          return newState ?? null;
         } else {
-          return [...prev, { entry_id: entryId, collection_id: collectionId }];
+          return prev
+            ? [...prev, { entry_id: entryId, collection_id: collectionId }]
+            : [{ entry_id: entryId, collection_id: collectionId }];
         }
       });
 
       // backend update
+      // TODO if backend fails, need to rollback UI update
       if (isLearned) {
         deleteLearnedEntry(entryId, collectionId);
       } else {
@@ -78,18 +83,13 @@ const LearnedEntriesContextProvider = ({
 
   useEffect(() => {
     const fetchData = async (userId: string) => {
-      if (userId) {
-        const data = await getLearnedEntries(userId);
-        setLearnedEntries(data);
-        return data;
-      } else {
-        // TODO : check localstorage and return if exists
-        return [];
-      }
+      const data = await getLearnedEntries(userId);
+      setLearnedEntries(data);
+      return data;
     };
+
     if (user?.id) {
       fetchData(user.id);
-    } else {
     }
   }, [user, session]);
 

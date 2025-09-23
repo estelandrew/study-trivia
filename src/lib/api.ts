@@ -1,29 +1,42 @@
 import supabase from "@utils/supabase";
 
 export const getCollections = async () => {
-  const { data: collections } = await supabase.from("collections").select(`
+  try {
+    const { data, error } = await supabase.from("collections").select(`
     id,
     name,
     description,
     entries (id, clue, answer)
   `);
-  return collections;
+    if (error) console.error(error.message);
+    return data;
+  } catch (error) {
+    console.error(`An unexpected error occurred: ${error}`);
+    return null;
+  }
 };
 
 export const getCategories = async () => {
-  const { data: categories } = await supabase.from("categories").select(`
+  try {
+    const { data, error } = await supabase.from("categories").select(`
     id,
     slug,
     name
   `);
-  return categories;
+    if (error) console.error(error.message);
+    return data;
+  } catch (error) {
+    console.error(`An unexpected error occurred: ${error}`);
+    return null;
+  }
 };
 
 export const getCollectionBySlug = async (slug: string) => {
-  const { data: collections } = await supabase
-    .from("collections")
-    .select(
-      `
+  try {
+    const { data, error } = await supabase
+      .from("collections")
+      .select(
+        `
     id,
     slug,
     name,
@@ -31,36 +44,52 @@ export const getCollectionBySlug = async (slug: string) => {
     categories (slug),
     entries:entries!entries_collection_id_fkey (id, clue, answer)
   `
-    )
-    .eq("slug", slug)
-    .maybeSingle();
-  return collections;
+      )
+      .eq("slug", slug)
+      .maybeSingle();
+    if (error) console.error(error.message);
+    return data;
+  } catch (error) {
+    console.error(`An unexpected error occurred: ${error}`);
+    return null;
+  }
 };
 
 export const getCollectionsByCategorySlug = async (slug: string) => {
-  const { data: collections } = await supabase
-    .from("categories")
-    .select(
-      `
+  try {
+    const { data, error } = await supabase
+      .from("categories")
+      .select(
+        `
     id,
     slug,
     name,
     description,
     collections (id, slug, name, description)
   `
-    )
-    .eq("slug", slug)
-    .maybeSingle();
-  return collections;
+      )
+      .eq("slug", slug)
+      .maybeSingle();
+    if (error) console.error(error.message);
+    return data;
+  } catch (error) {
+    console.error(`An unexpected error occurred: ${error}`);
+    return null;
+  }
 };
 
 export const getLearnedEntries = async (userId: string) => {
-  const { data: learnedEntries } = await supabase
-    .from("learned_entries")
-    .select("entry_id,collection_id")
-    .eq("user_id", userId);
-  if (learnedEntries) return learnedEntries;
-  return [];
+  try {
+    const { data, error } = await supabase
+      .from("learned_entries")
+      .select("entry_id,collection_id")
+      .eq("user_id", userId);
+    if (error) console.error(error.message);
+    return data;
+  } catch (error) {
+    console.error(`An unexpected error occurred: ${error}`);
+    return null;
+  }
 };
 
 export const insertLearnedEntry = async (
@@ -77,6 +106,7 @@ export const insertLearnedEntry = async (
     if (error) console.error(error.message);
   } catch (error) {
     console.error(`An unexpected error occurred: ${error}`);
+    return null;
   }
 };
 
@@ -93,5 +123,6 @@ export const deleteLearnedEntry = async (
     if (error) console.error(error.message);
   } catch (error) {
     console.error(`An unexpected error occurred: ${error}`);
+    return null;
   }
 };
