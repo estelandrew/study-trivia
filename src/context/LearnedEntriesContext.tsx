@@ -14,13 +14,7 @@ import {
   insertLearnedEntry,
   deleteLearnedEntry,
 } from "@/lib/api";
-
-type LearnedEntriesType =
-  | {
-      entry_id: number;
-      collection_id: number;
-    }[]
-  | null;
+import { LearnedEntriesType } from "@/types/types";
 
 type LearnedEntriesContextType = {
   learnedEntries: LearnedEntriesType;
