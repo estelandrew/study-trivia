@@ -47,7 +47,10 @@ const LearnedEntriesContextProvider = ({
         if (isLearned) {
           const newState = prev?.filter(
             (entry) =>
-              entry.entry_id !== entryId && entry.collection_id !== collectionId
+              !(
+                entry.entry_id === entryId &&
+                entry.collection_id === collectionId
+              )
           );
           return newState ?? null;
         } else {

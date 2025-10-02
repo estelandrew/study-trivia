@@ -64,7 +64,7 @@ const tableDataReducer = (state: StateType, action: ActionType) => {
     case Views.Learned:
       console.log("LEARNED triggered");
       return {
-        currentView: Views.Remaining,
+        currentView: Views.Learned,
         entries: action.payload.collectionJoinEntries.entries.filter(
           (entry) =>
             !isEntryLearned(
@@ -85,6 +85,11 @@ const tableDataReducer = (state: StateType, action: ActionType) => {
   }
 };
 
+// const initialData = {
+//     currentView: Views.Remaining,
+//     entries: collectionJoinEntries.entries,
+//   };
+
 const EntriesTableContextProvider = ({
   collectionJoinEntries,
   children,
@@ -93,21 +98,20 @@ const EntriesTableContextProvider = ({
   children: React.ReactNode;
 }) => {
   const { learnedEntries } = useLearnedEntriesContext();
-  const initialData = {
+
+  const [state, dispatch] = useReducer(tableDataReducer, {
     currentView: Views.Remaining,
     entries: collectionJoinEntries.entries,
-  };
-
-  const [state, dispatch] = useReducer(tableDataReducer, initialData);
+  });
 
   useEffect(() => {
     if (learnedEntries) {
       dispatch({
-        type: Views.Remaining,
+        type: state.currentView,
         payload: { collectionJoinEntries, learnedEntries },
       });
     }
-  }, [learnedEntries, collectionJoinEntries]);
+  }, [learnedEntries, collectionJoinEntries, state.currentView]);
 
   return (
     <EntriesTableContext.Provider value={{ state, dispatch }}>
