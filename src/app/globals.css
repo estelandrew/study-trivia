@@ -65,4 +65,7 @@ a {
 
 .main-content-container {
   padding-top: 4rem;
+  width: 100%;
+  max-width: 85rem;
+  margin: 0 auto;
 }

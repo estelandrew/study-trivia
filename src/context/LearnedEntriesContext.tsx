@@ -14,13 +14,7 @@ import {
   insertLearnedEntry,
   deleteLearnedEntry,
 } from "@/lib/api";
-
-type LearnedEntriesType =
-  | {
-      entry_id: number;
-      collection_id: number;
-    }[]
-  | null;
+import { LearnedEntriesType } from "@/types/types";
 
 type LearnedEntriesContextType = {
   learnedEntries: LearnedEntriesType;
@@ -53,7 +47,10 @@ const LearnedEntriesContextProvider = ({
         if (isLearned) {
           const newState = prev?.filter(
             (entry) =>
-              entry.entry_id !== entryId && entry.collection_id !== collectionId
+              !(
+                entry.entry_id === entryId &&
+                entry.collection_id === collectionId
+              )
           );
           return newState ?? null;
         } else {

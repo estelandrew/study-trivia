@@ -1,4 +1,5 @@
 import EntriesTable from "@/components/EntriesTable/EntriesTable";
+import EntriesTableContextProvider from "@/context/EntriesTableContext/EntriesTableContext";
 import { getCollectionBySlug } from "@/lib/api";
 
 export const revalidate = 0;
@@ -13,7 +14,11 @@ export default async function Page({
   return (
     <>
       {collectionJoinEntries ? (
-        <EntriesTable collectionJoinEntries={collectionJoinEntries} />
+        <EntriesTableContextProvider
+          collectionJoinEntries={collectionJoinEntries}
+        >
+          <EntriesTable collectionJoinEntries={collectionJoinEntries} />
+        </EntriesTableContextProvider>
       ) : (
         <p>No collection found</p>
       )}

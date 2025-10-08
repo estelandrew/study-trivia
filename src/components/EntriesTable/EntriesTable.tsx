@@ -1,11 +1,14 @@
 "use client";
 
 import { luckiestGuy } from "@utils/fonts";
+import Toolbar from "@/components/Toolbar/Toolbar";
+import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
 import EntriesTableRow from "../EntriesTableRow/EntriesTableRow";
 import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";
 
 const EntriesTable = ({ collectionJoinEntries }: Props) => {
+  const { state } = useEntriesTable();
   return (
     <div className={styles.container}>
       <h2 className={`${luckiestGuy.className}`}>
@@ -14,6 +17,7 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
       <div className={styles.description}>
         {collectionJoinEntries.description}
       </div>
+      <Toolbar collectionJoinEntries={collectionJoinEntries} />
       <table className={styles.table}>
         <thead>
           <tr>
@@ -23,7 +27,7 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
           </tr>
         </thead>
         <tbody>
-          {collectionJoinEntries.entries.map((entry) => (
+          {state.entries.map((entry) => (
             <EntriesTableRow
               key={entry.id}
               clue={entry.clue}

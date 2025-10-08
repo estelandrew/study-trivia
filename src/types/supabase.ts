@@ -17,55 +17,55 @@ export type Database = {
       categories: {
         Row: {
           created_at: string
-          description: string | null
+          description: string
           id: number
-          name: string | null
-          slug: string | null
+          name: string
+          slug: string
           updated_at: string | null
         }
         Insert: {
           created_at?: string
-          description?: string | null
+          description: string
           id?: never
-          name?: string | null
-          slug?: string | null
+          name: string
+          slug: string
           updated_at?: string | null
         }
         Update: {
           created_at?: string
-          description?: string | null
+          description?: string
           id?: never
-          name?: string | null
-          slug?: string | null
+          name?: string
+          slug?: string
           updated_at?: string | null
         }
         Relationships: []
       }
       collections: {
         Row: {
-          category_id: number | null
+          category_id: number
           created_at: string
-          description: string | null
+          description: string
           id: number
-          name: string | null
+          name: string
           slug: string
           updated_at: string | null
         }
         Insert: {
-          category_id?: number | null
+          category_id: number
           created_at?: string
-          description?: string | null
+          description: string
           id?: number
-          name?: string | null
+          name: string
           slug: string
           updated_at?: string | null
         }
         Update: {
-          category_id?: number | null
+          category_id?: number
           created_at?: string
-          description?: string | null
+          description?: string
           id?: number
-          name?: string | null
+          name?: string
           slug?: string
           updated_at?: string | null
         }
@@ -111,24 +111,24 @@ export type Database = {
       }
       entries: {
         Row: {
-          answer: string | null
-          clue: string | null
+          answer: string
+          clue: string
           collection_id: number
           created_at: string
           id: number
           updated_at: string | null
         }
         Insert: {
-          answer?: string | null
-          clue?: string | null
+          answer: string
+          clue: string
           collection_id: number
           created_at?: string
           id?: number
           updated_at?: string | null
         }
         Update: {
-          answer?: string | null
-          clue?: string | null
+          answer?: string
+          clue?: string
           collection_id?: number
           created_at?: string
           id?: number
@@ -170,19 +170,19 @@ export type Database = {
           collection_id: number
           created_at: string
           entry_id: number
-          user_id: string | null
+          user_id: string
         }
         Insert: {
           collection_id: number
           created_at?: string
           entry_id: number
-          user_id?: string | null
+          user_id?: string
         }
         Update: {
           collection_id?: number
           created_at?: string
           entry_id?: number
-          user_id?: string | null
+          user_id?: string
         }
         Relationships: [
           {

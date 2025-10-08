@@ -42,7 +42,8 @@ export const getCollectionBySlug = async (slug: string) => {
     name,
     description,
     categories (slug),
-    entries:entries!entries_collection_id_fkey (id, clue, answer)
+    entries:entries!entries_collection_id_fkey (id, clue, answer),
+    entries_count:entries!entries_collection_id_fkey(count)
   `
       )
       .eq("slug", slug)
