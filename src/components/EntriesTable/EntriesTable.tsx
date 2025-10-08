@@ -2,7 +2,7 @@
 
 import { luckiestGuy } from "@utils/fonts";
 import Toolbar from "@/components/Toolbar/Toolbar";
-import { useEntriesTable } from "@/context/EntriesTableContext";
+import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
 import EntriesTableRow from "../EntriesTableRow/EntriesTableRow";
 import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";

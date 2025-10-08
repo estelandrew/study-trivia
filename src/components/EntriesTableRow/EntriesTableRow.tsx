@@ -2,7 +2,7 @@ import { useState, useEffect } from "react";
 import { FiCheck } from "react-icons/fi";
 import { FaRegSquare } from "react-icons/fa6";
 import { useLearnedEntriesContext } from "@/context/LearnedEntriesContext";
-import { useEntriesTable } from "@/context/EntriesTableContext";
+import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
 import { Views } from "@/types/types";
 import EntriesTableAnswer from "@components/EntriesTableAnswer/EntriesTableAnswer";
 import { Props } from "./EntriesTableRow.types";

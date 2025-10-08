@@ -1,4 +1,4 @@
-import { useEntriesTable } from "@/context/EntriesTableContext";
+import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
 import { useLearnedEntriesContext } from "@/context/LearnedEntriesContext";
 import { Views } from "@/types/types";
 import { Props } from "./Toolbar.types";
@@ -11,7 +11,6 @@ const Toolbar = ({ collectionJoinEntries }: Props) => {
 
   const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
     const el = e.target as HTMLElement;
-    console.log("button clicked: ", el.id);
     switch (el.id) {
       case "btn-remaining":
         dispatch({

@@ -1,6 +1,6 @@
 "use client";
 
-import { useEntriesTable } from "@/context/EntriesTableContext";
+import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
 import { Views } from "@/types/types";
 import { Props } from "./EntriesTableAnswer.types";
 import styles from "./EntriesTableAnswer.module.scss";
