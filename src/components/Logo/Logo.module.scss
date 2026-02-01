@@ -32,35 +32,34 @@
 .t {
   position: relative;
   z-index: 3;
-  background-color: var(--color-purple);
+  background-color: var(--color-orange);
   margin-left: 0;
 }
 
 .r {
   position: relative;
   z-index: 2;
-  background-color: var(--color-green);
+  background-color: var(--color-blue);
 }
 
 .i {
   position: relative;
   z-index: 3;
-  background-color: var(--color-red);
+  background-color: var(--color-purple);
 }
 
 .v {
   position: relative;
   z-index: 2;
-  background-color: var(--color-blue);
+  background-color: var(--color-orange);
 }
 
 .i2 {
-  background-color: var(--color-purple);
+  background-color: var(--color-blue);
 }
 
 .a {
   position: relative;
   z-index: 2;
-  background-color: var(--color-yellow);
-  color: #3d3d3d;
+  background-color: var(--color-purple);
 }
