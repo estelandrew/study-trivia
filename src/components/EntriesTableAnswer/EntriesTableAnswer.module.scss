@@ -1,5 +1,6 @@
 .container {
   cursor: pointer;
+  font-weight: 700;
 }
 
 .study {
@@ -15,7 +16,7 @@
 }
 
 .concealer {
-  color: var(--color-purple-tinted);
+  color: var(--color-blue-tinted);
   font-weight: 700;
   text-decoration: underline;
 }
