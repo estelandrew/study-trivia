@@ -11,8 +11,8 @@ export const tableDataReducer = (state: StateType, action: ActionType) => {
           isEntryLearned(
             entry,
             action.payload.collectionJoinEntries.id,
-            action.payload.learnedEntries
-          )
+            action.payload.learnedEntries,
+          ),
         ),
       };
     case Views.Learned:
@@ -23,8 +23,8 @@ export const tableDataReducer = (state: StateType, action: ActionType) => {
             !isEntryLearned(
               entry,
               action.payload.collectionJoinEntries.id,
-              action.payload.learnedEntries
-            )
+              action.payload.learnedEntries,
+            ),
         ),
       };
     case Views.Sheet:
@@ -40,13 +40,13 @@ export const tableDataReducer = (state: StateType, action: ActionType) => {
 const isEntryLearned = (
   entry: Entry,
   collectionId: number,
-  learnedEntries: LearnedEntriesType
+  learnedEntries: LearnedEntriesType,
 ) => {
   // if entry.id and collectionId have matching entry in learnedEntries return true
   const matchingEntry = learnedEntries?.filter(
     (_entry) =>
       _entry["collection_id"] === collectionId &&
-      _entry["entry_id"] === entry.id
+      _entry["entry_id"] === entry.id,
   )[0];
   return !matchingEntry;
 };
