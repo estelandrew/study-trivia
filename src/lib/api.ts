@@ -44,7 +44,7 @@ export const getCollectionBySlug = async (slug: string) => {
     categories (slug),
     entries:entries!entries_collection_id_fkey (id, clue, answer),
     entries_count:entries!entries_collection_id_fkey(count)
-  `
+  `,
       )
       .eq("slug", slug)
       .maybeSingle();
@@ -67,7 +67,7 @@ export const getCollectionsByCategorySlug = async (slug: string) => {
     name,
     description,
     collections (id, slug, name, description)
-  `
+  `,
       )
       .eq("slug", slug)
       .maybeSingle();
@@ -79,12 +79,16 @@ export const getCollectionsByCategorySlug = async (slug: string) => {
   }
 };
 
-export const getLearnedEntries = async (userId: string) => {
+export const getLearnedEntries = async (
+  userId: string,
+  collectionId: number,
+) => {
   try {
     const { data, error } = await supabase
       .from("learned_entries")
       .select("entry_id,collection_id")
-      .eq("user_id", userId);
+      .eq("user_id", userId)
+      .eq("collection_id", collectionId);
     if (error) console.error(error.message);
     return data;
   } catch (error) {
@@ -96,7 +100,7 @@ export const getLearnedEntries = async (userId: string) => {
 export const insertLearnedEntry = async (
   entryId: number,
   collection_id: number,
-  userId: string
+  userId: string,
 ) => {
   try {
     const { error } = await supabase.from("learned_entries").insert({
@@ -113,7 +117,7 @@ export const insertLearnedEntry = async (
 
 export const deleteLearnedEntry = async (
   entryId: number,
-  collectionId: number
+  collectionId: number,
 ) => {
   try {
     const { error } = await supabase

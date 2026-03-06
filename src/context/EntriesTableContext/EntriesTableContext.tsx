@@ -1,19 +1,17 @@
 "use client";
 
-import { createContext, useContext, useReducer, useEffect } from "react";
-import { useLearnedEntriesContext } from "@/context/LearnedEntriesContext";
-import { Views } from "@/types/types";
-import { CollectionJoinEntries } from "@/types/types";
-import { ContextType } from "./EntriesTableContext.types";
-import { tableDataReducer } from "./lib";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import {
+  Views,
+  CollectionJoinEntries,
+  LearnedEntriesType,
+} from "@/types/types";
+import { useAuthContext } from "@/context/AuthContext";
+import { getLearnedEntries } from "@/lib/api";
+import { ContextType, UIEntry } from "./EntriesTableContext.types";
+import { buildEntries } from "./lib";
 
-const EntriesTableContext = createContext<ContextType>({
-  state: {
-    currentView: Views.Remaining,
-    entries: [],
-  },
-  dispatch: () => {},
-});
+const EntriesTableContext = createContext<ContextType | undefined>(undefined);
 
 const EntriesTableContextProvider = ({
   collectionJoinEntries,
@@ -22,34 +20,59 @@ const EntriesTableContextProvider = ({
   collectionJoinEntries: CollectionJoinEntries;
   children: React.ReactNode;
 }) => {
-  const { learnedEntries } = useLearnedEntriesContext();
-
-  const [state, dispatch] = useReducer(tableDataReducer, {
-    currentView: Views.Remaining,
-    entries: collectionJoinEntries.entries,
-  });
+  const { user } = useAuthContext();
+  const [learnedData, setLearnedData] = useState<LearnedEntriesType>(null);
+  const [currentView, setCurrentView] = useState<Views>(Views.Remaining);
+  const [entries, setEntries] = useState<UIEntry[]>([]);
+  const visibleEntries = useMemo(() => {
+    switch (currentView) {
+      case Views.Remaining:
+        return entries.filter((entry) => !entry.isLearned);
+      case Views.Learned:
+        return entries.filter((entry) => entry.isLearned);
+      case Views.Sheet:
+      default:
+        return entries;
+    }
+  }, [entries, currentView]);
 
   useEffect(() => {
-    if (learnedEntries) {
-      dispatch({
-        type: state.currentView,
-        payload: { collectionJoinEntries, learnedEntries },
-      });
+    const fetchData = async (userId: string) => {
+      const data = await getLearnedEntries(userId, collectionJoinEntries.id);
+      setLearnedData(data);
+      console.log({ data });
+    };
+    if (user?.id) {
+      fetchData(user.id);
     }
-  }, [learnedEntries, collectionJoinEntries, state.currentView]);
+  }, [user, collectionJoinEntries.id]);
+
+  useEffect(() => {
+    if (learnedData?.length) {
+      const builtEntries = buildEntries(collectionJoinEntries, learnedData);
+      setEntries(builtEntries);
+    }
+  }, [learnedData, collectionJoinEntries]);
 
   return (
-    <EntriesTableContext.Provider value={{ state, dispatch }}>
+    <EntriesTableContext.Provider
+      value={{
+        currentView,
+        setCurrentView,
+        setEntries,
+        visibleEntries,
+      }}
+    >
       {children}
     </EntriesTableContext.Provider>
   );
 };
 
-export const useEntriesTable = () => {
+export const useEntriesTableContext = () => {
   const context = useContext(EntriesTableContext);
   if (!context) {
     throw new Error(
-      "useEntriesTableContext must be used as child of EntriesTableContextProvider"
+      "useEntriesTableContext must be used as child of EntriesTableContextProvider",
     );
   }
   return context;

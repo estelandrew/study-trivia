@@ -2,13 +2,13 @@
 
 import { luckiestGuy } from "@utils/fonts";
 import Toolbar from "@/components/Toolbar/Toolbar";
-import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
+import { useEntriesTableContext } from "@/context/EntriesTableContext/EntriesTableContext";
 import EntriesTableRow from "../EntriesTableRow/EntriesTableRow";
 import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";
 
 const EntriesTable = ({ collectionJoinEntries }: Props) => {
-  const { state } = useEntriesTable();
+  const { visibleEntries } = useEntriesTableContext();
   return (
     <div className={styles.container}>
       <h2 className={`${luckiestGuy.className}`}>
@@ -23,11 +23,10 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
           <tr>
             <th>Clue</th>
             <th colSpan={2}>Answer</th>
-            {/* <th>Learned</th> */}
           </tr>
         </thead>
         <tbody>
-          {state.entries.map((entry) => (
+          {visibleEntries.map((entry) => (
             <EntriesTableRow
               key={entry.id}
               clue={entry.clue}

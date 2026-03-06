@@ -1,15 +1,27 @@
-import { Views, Entry } from "@/types/types";
-import { CollectionJoinEntries } from "@/types/types";
-import { LearnedEntriesType } from "@/types/types";
+import {
+  Entry,
+  LearnedEntriesType,
+  Views,
+  CollectionJoinEntries,
+} from "@/types/types";
 
 export type StateType = {
   currentView: Views;
   entries: Entry[];
 };
 
+export type UIEntry = {
+  id: number;
+  clue: string;
+  answer: string;
+  isLearned: boolean;
+};
+
 export type ContextType = {
-  state: StateType;
-  dispatch: React.ActionDispatch<[action: ActionType]>;
+  currentView: Views;
+  setCurrentView: React.Dispatch<React.SetStateAction<Views>>;
+  setEntries: React.Dispatch<React.SetStateAction<UIEntry[]>>;
+  visibleEntries: UIEntry[];
 };
 
 export type ActionType = {

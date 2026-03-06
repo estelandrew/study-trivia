@@ -1,58 +1,67 @@
-import { useState, useEffect } from "react";
+import { useState, useMemo } from "react";
 import { FiCheck } from "react-icons/fi";
 import { FaRegSquare } from "react-icons/fa6";
-import { useLearnedEntriesContext } from "@/context/LearnedEntriesContext";
-import { useEntriesTable } from "@/context/EntriesTableContext/EntriesTableContext";
+import { motion, AnimatePresence } from "motion/react";
+import { useEntriesTableContext } from "@/context/EntriesTableContext/EntriesTableContext";
 import { Views } from "@/types/types";
-import EntriesTableAnswer from "@components/EntriesTableAnswer/EntriesTableAnswer";
 import { Props } from "./EntriesTableRow.types";
 import styles from "./EntriesTableRow.module.scss";
 
-const EntriesTableRow = ({ clue, answer, collectionId, entryId }: Props) => {
-  const { learnedEntries, toggleIsEntryLearned } = useLearnedEntriesContext();
-  const { state } = useEntriesTable();
-  const [isLearned, setIsLearned] = useState<boolean>(false);
+const EntriesTableRow = ({ clue, answer, entryId }: Props) => {
+  const { currentView } = useEntriesTableContext();
   const [isRevealed, setIsRevealed] = useState<boolean>(false);
 
-  useEffect(() => {
-    if (learnedEntries?.length) {
-      const matchingEntry = learnedEntries.filter(
-        (x) => x["collection_id"] === collectionId && x["entry_id"] === entryId
-      )[0];
-      if (matchingEntry) {
-        setIsLearned(true);
-        setIsRevealed(true);
-      }
+  const showAnswer = useMemo(() => {
+    let result: boolean;
+    if (
+      currentView === Views.Learned ||
+      currentView === Views.Sheet ||
+      isRevealed
+    ) {
+      result = true;
+    } else {
+      result = false;
     }
-  }, [learnedEntries, collectionId, entryId]);
+    return result;
+  }, [currentView, isRevealed]);
 
-  const handleToggleIsEntryLearned = () => {
-    toggleIsEntryLearned(isLearned, entryId, collectionId);
-    setIsLearned(!isLearned);
+  const toggleRevealed = () => {
+    if (currentView !== Views.Remaining) return -1;
+    setIsRevealed(!isRevealed);
   };
 
   return (
-    <tr>
-      <td>{clue}</td>
-      <EntriesTableAnswer
-        answer={answer}
-        isRevealedState={[isRevealed, setIsRevealed]}
-        collectionId={collectionId}
-      />
-      {state.currentView !== Views.Sheet && (
-        <td className={styles.learnedCell} onClick={handleToggleIsEntryLearned}>
-          {isLearned ? (
-            <div className={styles.isLearnedCheck}>
-              <FiCheck />
-            </div>
+    <AnimatePresence>
+      <motion.tr
+        key={entryId}
+        layout
+        initial={{ opacity: 0, scaleY: 0.8 }}
+        animate={{ opacity: 1, scaleY: 1 }}
+        exit={{ opacity: 0, scaleY: 0 }}
+        transition={{ duration: 0.2 }}
+        style={{ transformOrigin: "top" }}
+      >
+        <td>{clue}</td>
+        <td
+          className={`${styles.answerContainer} ${currentView !== Views.Remaining ? `${styles.defaultCursor}` : ``}`}
+          onClick={toggleRevealed}
+        >
+          {showAnswer ? (
+            <div className={styles.answer}>{answer}</div>
           ) : (
-            <div className={styles.notLearnedCheck}>
-              <FaRegSquare />
-            </div>
+            <div className={styles.concealer}>Reveal answer</div>
           )}
         </td>
-      )}
-    </tr>
+
+        {currentView !== Views.Sheet && (
+          <td className={styles.learnedCell}>
+            <div className={styles.isLearnedCheck}>
+              {currentView === Views.Remaining ? <FaRegSquare /> : <FiCheck />}
+            </div>
+          </td>
+        )}
+      </motion.tr>
+    </AnimatePresence>
   );
 };
 
