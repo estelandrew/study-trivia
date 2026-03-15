@@ -7,7 +7,11 @@ import {
   LearnedEntriesType,
 } from "@/types/types";
 import { useAuthContext } from "@/context/AuthContext";
-import { getLearnedEntries } from "@/lib/api";
+import {
+  getLearnedEntries,
+  insertLearnedEntry,
+  deleteLearnedEntry,
+} from "@/lib/api";
 import { ContextType, UIEntry } from "./EntriesTableContext.types";
 import { buildEntries } from "./lib";
 
@@ -20,11 +24,18 @@ const EntriesTableContextProvider = ({
   collectionJoinEntries: CollectionJoinEntries;
   children: React.ReactNode;
 }) => {
+  const collectionId = collectionJoinEntries.id;
   const { user } = useAuthContext();
   const [learnedData, setLearnedData] = useState<LearnedEntriesType>(null);
   const [currentView, setCurrentView] = useState<Views>(Views.Remaining);
   const [entries, setEntries] = useState<UIEntry[]>([]);
+  //const [isLoaded, setIsLoaded] = useState<boolean>(true);
+
   const visibleEntries = useMemo(() => {
+    // learnedData has not been populated OR entries has not been populated
+    if (!learnedData || learnedData.length < 1 || entries.length < 1) {
+      return [];
+    }
     switch (currentView) {
       case Views.Remaining:
         return entries.filter((entry) => !entry.isLearned);
@@ -34,13 +45,22 @@ const EntriesTableContextProvider = ({
       default:
         return entries;
     }
-  }, [entries, currentView]);
+  }, [entries, currentView, learnedData]);
+
+  const toggleIsLearned = (isLearned: boolean, entryId: number) => {
+    // isLearned refers to status of entry prior to toggle
+    if (!user) return;
+    if (isLearned) {
+      deleteLearnedEntry(collectionId, entryId, user.id);
+    } else {
+      insertLearnedEntry(collectionId, entryId, user.id);
+    }
+  };
 
   useEffect(() => {
     const fetchData = async (userId: string) => {
       const data = await getLearnedEntries(userId, collectionJoinEntries.id);
       setLearnedData(data);
-      console.log({ data });
     };
     if (user?.id) {
       fetchData(user.id);
@@ -48,10 +68,11 @@ const EntriesTableContextProvider = ({
   }, [user, collectionJoinEntries.id]);
 
   useEffect(() => {
-    if (learnedData?.length) {
-      const builtEntries = buildEntries(collectionJoinEntries, learnedData);
-      setEntries(builtEntries);
+    if (!learnedData || learnedData.length < 1) {
+      return;
     }
+    const builtEntries = buildEntries(collectionJoinEntries, learnedData);
+    setEntries(builtEntries);
   }, [learnedData, collectionJoinEntries]);
 
   return (
@@ -61,6 +82,8 @@ const EntriesTableContextProvider = ({
         setCurrentView,
         setEntries,
         visibleEntries,
+        toggleIsLearned,
+        //isLoaded,
       }}
     >
       {children}

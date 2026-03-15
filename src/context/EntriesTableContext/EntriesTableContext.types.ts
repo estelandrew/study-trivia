@@ -22,6 +22,8 @@ export type ContextType = {
   setCurrentView: React.Dispatch<React.SetStateAction<Views>>;
   setEntries: React.Dispatch<React.SetStateAction<UIEntry[]>>;
   visibleEntries: UIEntry[];
+  toggleIsLearned: (isLearned: boolean, entryId: number) => void;
+  //isLoaded: boolean;
 };
 
 export type ActionType = {

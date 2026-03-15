@@ -98,8 +98,8 @@ export const getLearnedEntries = async (
 };
 
 export const insertLearnedEntry = async (
-  entryId: number,
   collection_id: number,
+  entryId: number,
   userId: string,
 ) => {
   try {
@@ -116,15 +116,17 @@ export const insertLearnedEntry = async (
 };
 
 export const deleteLearnedEntry = async (
-  entryId: number,
   collectionId: number,
+  entryId: number,
+  userId: string,
 ) => {
   try {
     const { error } = await supabase
       .from("learned_entries")
       .delete()
       .eq("entry_id", entryId)
-      .eq("collection_id", collectionId);
+      .eq("collection_id", collectionId)
+      .eq("user_id", userId);
     if (error) console.error(error.message);
   } catch (error) {
     console.error(`An unexpected error occurred: ${error}`);
