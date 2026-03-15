@@ -9,7 +9,6 @@ import styles from "./Nav.module.scss";
 const Nav = () => {
   const { signOut } = useAuth();
   const { session } = useAuthContext();
-  console.log({ session });
   //const menuRef = useRef<HTMLDivElement>(null);
 
   // const handleOpenMenu = (e: React.MouseEvent) => {

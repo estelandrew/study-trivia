@@ -1,19 +1,21 @@
 "use client";
 
-import { createContext, useContext, useReducer, useEffect } from "react";
-import { useLearnedEntriesContext } from "@/context/LearnedEntriesContext";
-import { Views } from "@/types/types";
-import { CollectionJoinEntries } from "@/types/types";
-import { ContextType } from "./EntriesTableContext.types";
-import { tableDataReducer } from "./lib";
+import { createContext, useContext, useState, useEffect, useMemo } from "react";
+import {
+  Views,
+  CollectionJoinEntries,
+  LearnedEntriesType,
+} from "@/types/types";
+import { useAuthContext } from "@/context/AuthContext";
+import {
+  getLearnedEntries,
+  insertLearnedEntry,
+  deleteLearnedEntry,
+} from "@/lib/api";
+import { ContextType, UIEntry } from "./EntriesTableContext.types";
+import { buildEntries } from "./lib";
 
-const EntriesTableContext = createContext<ContextType>({
-  state: {
-    currentView: Views.Remaining,
-    entries: [],
-  },
-  dispatch: () => {},
-});
+const EntriesTableContext = createContext<ContextType | undefined>(undefined);
 
 const EntriesTableContextProvider = ({
   collectionJoinEntries,
@@ -22,34 +24,78 @@ const EntriesTableContextProvider = ({
   collectionJoinEntries: CollectionJoinEntries;
   children: React.ReactNode;
 }) => {
-  const { learnedEntries } = useLearnedEntriesContext();
+  const collectionId = collectionJoinEntries.id;
+  const { user } = useAuthContext();
+  const [learnedData, setLearnedData] = useState<LearnedEntriesType>(null);
+  const [currentView, setCurrentView] = useState<Views>(Views.Remaining);
+  const [entries, setEntries] = useState<UIEntry[]>([]);
+  //const [isLoaded, setIsLoaded] = useState<boolean>(true);
 
-  const [state, dispatch] = useReducer(tableDataReducer, {
-    currentView: Views.Remaining,
-    entries: collectionJoinEntries.entries,
-  });
+  const visibleEntries = useMemo(() => {
+    // learnedData has not been populated OR entries has not been populated
+    if (!learnedData || learnedData.length < 1 || entries.length < 1) {
+      return [];
+    }
+    switch (currentView) {
+      case Views.Remaining:
+        return entries.filter((entry) => !entry.isLearned);
+      case Views.Learned:
+        return entries.filter((entry) => entry.isLearned);
+      case Views.Sheet:
+      default:
+        return entries;
+    }
+  }, [entries, currentView, learnedData]);
+
+  const toggleIsLearned = (isLearned: boolean, entryId: number) => {
+    // isLearned refers to status of entry prior to toggle
+    if (!user) return;
+    if (isLearned) {
+      deleteLearnedEntry(collectionId, entryId, user.id);
+    } else {
+      insertLearnedEntry(collectionId, entryId, user.id);
+    }
+  };
 
   useEffect(() => {
-    if (learnedEntries) {
-      dispatch({
-        type: state.currentView,
-        payload: { collectionJoinEntries, learnedEntries },
-      });
+    const fetchData = async (userId: string) => {
+      const data = await getLearnedEntries(userId, collectionJoinEntries.id);
+      setLearnedData(data);
+    };
+    if (user?.id) {
+      fetchData(user.id);
     }
-  }, [learnedEntries, collectionJoinEntries, state.currentView]);
+  }, [user, collectionJoinEntries.id]);
+
+  useEffect(() => {
+    if (!learnedData || learnedData.length < 1) {
+      return;
+    }
+    const builtEntries = buildEntries(collectionJoinEntries, learnedData);
+    setEntries(builtEntries);
+  }, [learnedData, collectionJoinEntries]);
 
   return (
-    <EntriesTableContext.Provider value={{ state, dispatch }}>
+    <EntriesTableContext.Provider
+      value={{
+        currentView,
+        setCurrentView,
+        setEntries,
+        visibleEntries,
+        toggleIsLearned,
+        //isLoaded,
+      }}
+    >
       {children}
     </EntriesTableContext.Provider>
   );
 };
 
-export const useEntriesTable = () => {
+export const useEntriesTableContext = () => {
   const context = useContext(EntriesTableContext);
   if (!context) {
     throw new Error(
-      "useEntriesTableContext must be used as child of EntriesTableContextProvider"
+      "useEntriesTableContext must be used as child of EntriesTableContextProvider",
     );
   }
   return context;
