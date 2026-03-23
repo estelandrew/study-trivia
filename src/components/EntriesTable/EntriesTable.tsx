@@ -19,7 +19,7 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
       <div className={styles.description}>
         {collectionJoinEntries.description}
       </div>
-      <Toolbar collectionJoinEntries={collectionJoinEntries} />
+      <Toolbar />
       <table className={styles.table}>
         <thead>
           <tr>

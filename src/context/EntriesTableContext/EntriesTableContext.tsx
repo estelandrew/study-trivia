@@ -12,7 +12,7 @@ import {
   insertLearnedEntry,
   deleteLearnedEntry,
 } from "@/lib/api";
-import { ContextType, UIEntry } from "./EntriesTableContext.types";
+import { ContextType, UIEntry, Counts } from "./EntriesTableContext.types";
 import { buildEntries } from "./lib";
 
 const EntriesTableContext = createContext<ContextType | undefined>(undefined);
@@ -29,6 +29,11 @@ const EntriesTableContextProvider = ({
   const [learnedData, setLearnedData] = useState<LearnedEntriesType>(null);
   const [currentView, setCurrentView] = useState<Views>(Views.Remaining);
   const [entries, setEntries] = useState<UIEntry[]>([]);
+  const [counts, setCounts] = useState<Counts>({
+    total: collectionJoinEntries.entries_count[0].count,
+    remaining: 0,
+    learned: 0,
+  });
   //const [isLoaded, setIsLoaded] = useState<boolean>(true);
 
   const visibleEntries = useMemo(() => {
@@ -75,6 +80,20 @@ const EntriesTableContextProvider = ({
     setEntries(builtEntries);
   }, [learnedData, collectionJoinEntries]);
 
+  // updated counts when entries get updated
+  useEffect(() => {
+    if (entries && entries.length > 0) {
+      const remainingCount = entries.filter((entry) => !entry.isLearned).length;
+      setCounts((prev) => {
+        return {
+          ...prev,
+          remaining: remainingCount,
+          learned: prev.total - remainingCount,
+        };
+      });
+    }
+  }, [entries]);
+
   return (
     <EntriesTableContext.Provider
       value={{
@@ -83,7 +102,8 @@ const EntriesTableContextProvider = ({
         setEntries,
         visibleEntries,
         toggleIsLearned,
-        //isLoaded,
+        counts,
+        setCounts,
       }}
     >
       {children}

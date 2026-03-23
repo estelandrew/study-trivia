@@ -1,38 +1,29 @@
-import { useEntriesTableContext } from "@/context/EntriesTableContext/EntriesTableContext";
 import { Views } from "@/types/types";
-import { Props } from "./Toolbar.types";
+import { useEntriesTableContext } from "@/context/EntriesTableContext/EntriesTableContext";
+import ViewButton from "../ViewButton/ViewButton";
 import styles from "./Toolbar.module.scss";
 
-const Toolbar = ({ collectionJoinEntries }: Props) => {
-  const { setCurrentView } = useEntriesTableContext();
-  const { count } = collectionJoinEntries.entries_count[0];
-
-  const handleButtonClick = (e: React.MouseEvent<HTMLButtonElement>) => {
-    const el = e.target as HTMLElement;
-    switch (el.id) {
-      case Views.Remaining:
-      case Views.Learned:
-      case Views.Sheet:
-        setCurrentView(el.id);
-        break;
-      default:
-        console.error("Btn id must be from Views enum");
-        return null;
-    }
-  };
+const Toolbar = () => {
+  const { counts } = useEntriesTableContext();
 
   return (
     <div className={styles.container}>
-      <div>{count} items</div>
-      <button id={Views.Remaining} onClick={handleButtonClick}>
-        Remaining
-      </button>
-      <button id={Views.Learned} onClick={handleButtonClick}>
-        Learned
-      </button>
-      <button id={Views.Sheet} onClick={handleButtonClick}>
-        Study sheet
-      </button>
+      <div className={styles.count}>{counts.total} items</div>
+      <div className={styles.flexContainer}>
+        <ViewButton
+          view={Views.Remaining}
+          label="Remaining"
+          count={counts.remaining}
+        />
+        <ViewButton
+          view={Views.Learned}
+          label="Learned"
+          count={counts.learned}
+        />
+        <div className={styles.pushRight}>
+          <ViewButton view={Views.Sheet} label="Cheat Sheet" />
+        </div>
+      </div>
     </div>
   );
 };

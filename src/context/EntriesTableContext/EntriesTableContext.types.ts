@@ -23,7 +23,8 @@ export type ContextType = {
   setEntries: React.Dispatch<React.SetStateAction<UIEntry[]>>;
   visibleEntries: UIEntry[];
   toggleIsLearned: (isLearned: boolean, entryId: number) => void;
-  //isLoaded: boolean;
+  counts: Counts;
+  setCounts: React.Dispatch<React.SetStateAction<Counts>>;
 };
 
 export type ActionType = {
@@ -32,4 +33,10 @@ export type ActionType = {
     collectionJoinEntries: CollectionJoinEntries;
     learnedEntries: LearnedEntriesType;
   };
+};
+
+export type Counts = {
+  total: number;
+  remaining: number;
+  learned: number;
 };
