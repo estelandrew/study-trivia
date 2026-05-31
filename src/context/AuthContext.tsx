@@ -13,16 +13,19 @@ import supabase from "@utils/supabase";
 type AuthContextType = {
   user: User | null;
   session: Session | null;
+  isAuthLoading: boolean;
 };
 
 const AuthContext = createContext<AuthContextType>({
   user: null,
   session: null,
+  isAuthLoading: true,
 });
 
 export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [session, setSession] = useState<Session | null>(null);
+  const [isAuthLoading, setIsAuthLoading] = useState<boolean>(true);
 
   useEffect(() => {
     supabase.auth.getSession().then(({ data: { session } }) => {
@@ -34,7 +37,8 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
       (event, session) => {
         setSession(session);
         setUser(session?.user ?? null);
-      }
+        setIsAuthLoading(false);
+      },
     );
 
     return () => {
@@ -43,7 +47,7 @@ export const AuthContextProvider = ({ children }: { children: ReactNode }) => {
   }, []);
 
   return (
-    <AuthContext.Provider value={{ user, session }}>
+    <AuthContext.Provider value={{ user, session, isAuthLoading }}>
       {children}
     </AuthContext.Provider>
   );
