@@ -31,9 +31,9 @@ export enum Views {
   Sheet = "sheet",
 }
 
-export type LearnedEntriesType =
-  | {
-      entry_id: number;
-      collection_id: number;
-    }[]
-  | null;
+export type LearnedEntry = {
+  entry_id: number;
+  collection_id: number;
+};
+
+export type LearnedEntriesType = LearnedEntry[] | null;

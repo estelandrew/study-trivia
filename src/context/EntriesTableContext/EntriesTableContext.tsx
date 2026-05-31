@@ -13,7 +13,12 @@ import {
   deleteLearnedEntry,
 } from "@/lib/api";
 import { ContextType, UIEntry, Counts } from "./EntriesTableContext.types";
-import { buildEntries } from "./lib";
+import {
+  buildEntries,
+  addEntryToLocalStorage,
+  deleteEntryFromLocalStorage,
+  isEntryInLocalStorage,
+} from "./lib";
 
 const EntriesTableContext = createContext<ContextType | undefined>(undefined);
 
@@ -25,7 +30,7 @@ const EntriesTableContextProvider = ({
   children: React.ReactNode;
 }) => {
   const collectionId = collectionJoinEntries.id;
-  const { user } = useAuthContext();
+  const { user, isAuthLoading } = useAuthContext();
   const [learnedData, setLearnedData] = useState<LearnedEntriesType>(null);
   const [currentView, setCurrentView] = useState<Views>(Views.Remaining);
   const [entries, setEntries] = useState<UIEntry[]>([]);
@@ -37,10 +42,6 @@ const EntriesTableContextProvider = ({
   //const [isLoaded, setIsLoaded] = useState<boolean>(true);
 
   const visibleEntries = useMemo(() => {
-    // learnedData has not been populated OR entries has not been populated
-    if (!learnedData || learnedData.length < 1 || entries.length < 1) {
-      return [];
-    }
     switch (currentView) {
       case Views.Remaining:
         return entries.filter((entry) => !entry.isLearned);
@@ -50,37 +51,49 @@ const EntriesTableContextProvider = ({
       default:
         return entries;
     }
-  }, [entries, currentView, learnedData]);
+  }, [entries, currentView]);
 
   const toggleIsLearned = (isLearned: boolean, entryId: number) => {
     // isLearned refers to status of entry prior to toggle
-    if (!user) return;
-    if (isLearned) {
-      deleteLearnedEntry(collectionId, entryId, user.id);
+    if (!user?.id) {
+      if (isEntryInLocalStorage(collectionId, entryId)) {
+        deleteEntryFromLocalStorage(collectionId, entryId);
+      } else {
+        addEntryToLocalStorage(collectionId, entryId);
+      }
     } else {
-      insertLearnedEntry(collectionId, entryId, user.id);
+      if (isLearned) {
+        deleteLearnedEntry(collectionId, entryId, user.id);
+      } else {
+        insertLearnedEntry(collectionId, entryId, user.id);
+      }
     }
   };
 
   useEffect(() => {
-    const fetchData = async (userId: string) => {
-      const data = await getLearnedEntries(userId, collectionJoinEntries.id);
+    const fetchLearnedData = async (userId?: string) => {
+      let data = null;
+      if (userId) {
+        data = await getLearnedEntries(userId, collectionJoinEntries.id);
+      } else {
+        const localData = localStorage.getItem("learned-entries");
+        if (localData) {
+          data = JSON.parse(localData);
+        }
+      }
       setLearnedData(data);
     };
-    if (user?.id) {
-      fetchData(user.id);
+    if (!isAuthLoading) {
+      fetchLearnedData(user?.id);
     }
-  }, [user, collectionJoinEntries.id]);
+  }, [user, collectionJoinEntries.id, isAuthLoading]);
 
   useEffect(() => {
-    if (!learnedData || learnedData.length < 1) {
-      return;
-    }
     const builtEntries = buildEntries(collectionJoinEntries, learnedData);
     setEntries(builtEntries);
   }, [learnedData, collectionJoinEntries]);
 
-  // updated counts when entries get updated
+  // update counts when entries get updated
   useEffect(() => {
     if (entries && entries.length > 0) {
       const remainingCount = entries.filter((entry) => !entry.isLearned).length;
