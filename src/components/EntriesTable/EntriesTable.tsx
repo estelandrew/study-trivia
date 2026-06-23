@@ -5,6 +5,7 @@ import { luckiestGuy } from "@utils/fonts";
 import Toolbar from "@/components/Toolbar/Toolbar";
 import { useEntriesTableContext } from "@/context/EntriesTableContext/EntriesTableContext";
 import { Views } from "@/types/types";
+import ContentWrapper from "@components/ContentWrapper/ContentWrapper";
 import EntriesTableRow from "../EntriesTableRow/EntriesTableRow";
 import { Props } from "./EntriesTable.types";
 import styles from "./EntriesTable.module.scss";
@@ -13,13 +14,15 @@ const EntriesTable = ({ collectionJoinEntries }: Props) => {
   const { currentView, visibleEntries } = useEntriesTableContext();
   return (
     <div className={styles.container}>
-      <h2 className={`${luckiestGuy.className}`}>
-        {collectionJoinEntries.name}
-      </h2>
-      <div className={styles.description}>
-        {collectionJoinEntries.description}
-      </div>
-      <Toolbar />
+      <ContentWrapper>
+        <h2 className={`${luckiestGuy.className}`}>
+          {collectionJoinEntries.name}
+        </h2>
+        <div className={styles.description}>
+          {collectionJoinEntries.description}
+        </div>
+      </ContentWrapper>
+      {/* <Toolbar /> */}
       <table className={styles.table}>
         <thead>
           <tr>

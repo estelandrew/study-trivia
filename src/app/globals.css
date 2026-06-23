@@ -6,6 +6,7 @@
   --color-blue-tinted: #84aed7;
   --color-orange: #ff6e00;
   --color-orange-tinted: #ffc599;
+  --color-green: #29ab87;
   --color-dark-text: #010000;
   --color-site-background: #040020;
   --border-radius: 8px;
@@ -28,7 +29,6 @@ body {
 body {
   color: #fff;
   background: var(--color-site-background);
-  width: 90%;
   margin: 2rem auto;
   color: #fff;
   -webkit-font-smoothing: antialiased;
