@@ -1,0 +1,86 @@
+@use "../../styles/mixins";
+
+.table {
+  margin-top: 2rem;
+  @include mixins.media-min-tablet-portrait {
+    width: 90%;
+    margin: 2rem auto 0 auto;
+  }
+}
+
+.cell {
+  border: 1px solid #36324c;
+  padding: 0.5rem;
+  margin-top: 1rem;
+  background-color: #1d1936;
+  &.clue {
+    //border-top-left-radius: var(--border-radius);
+    //border-bottom-left-radius: var(--border-radius);
+    border-right: none;
+  }
+  &.icon {
+    //border-top-right-radius: var(--border-radius);
+    //border-bottom-right-radius: var(--border-radius);
+  }
+}
+
+.headingRow {
+  display: flex;
+  font-weight: 700;
+  & > div {
+    width: 50%;
+    text-align: center;
+  }
+}
+
+.row {
+  display: flex;
+  box-shadow:
+    0 4px 8px 0 rgba(0, 0, 0, 0.2),
+    0 6px 20px 0 rgba(0, 0, 0, 0.19);
+}
+
+.clue {
+  display: flex;
+  align-items: center;
+  flex: 0 0 50%;
+}
+
+.answer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 1;
+  color: var(--color-blue-tinted);
+  font-weight: 700;
+  text-decoration: underline;
+}
+
+.isRevealed {
+  //color: var(--color-green-tinted);
+  text-decoration: none;
+  color: #fff;
+}
+
+.icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  flex: 0 0 15%;
+  color: var(--color-blue-tinted);
+  text-align: center;
+  background-color: #36324c;
+  max-width: 5rem;
+}
+
+.isLearned {
+  background-color: #1c775e;
+  color: #fff;
+  border: 1px solid #20886c;
+  transition: 0.125s;
+  &.icon {
+    background-color: #186651;
+  }
+}

@@ -1,44 +1,32 @@
 "use client";
 
-import { createContext, useContext, useState, useEffect, useMemo } from "react";
-import {
-  Views,
-  CollectionJoinEntries,
-  LearnedEntriesType,
-} from "@/types/types";
+import { useState, useEffect, useMemo } from "react";
+import { CollectionJoinEntries, LearnedEntriesType } from "@/types/types";
 import { useAuthContext } from "@/context/AuthContext";
 import {
   getLearnedEntries,
   insertLearnedEntry,
   deleteLearnedEntry,
 } from "@/lib/api";
-import { ContextType, UIEntry, Counts } from "./EntriesTableContext.types";
 import {
   buildEntries,
   addEntryToLocalStorage,
   deleteEntryFromLocalStorage,
   isEntryInLocalStorage,
 } from "./lib";
+import { UIEntry } from "./StudyTable.types";
 
-const EntriesTableContext = createContext<ContextType | undefined>(undefined);
-
-const EntriesTableContextProvider = ({
-  collectionJoinEntries,
-  children,
-}: {
-  collectionJoinEntries: CollectionJoinEntries;
-  children: React.ReactNode;
-}) => {
+const useStudyTable = (
+  collectionJoinEntries: CollectionJoinEntries,
+): {
+  entries: UIEntry[];
+  visibleEntries: UIEntry[];
+  toggleIsLearned: (isLearned: boolean, entryId: number) => void;
+} => {
   const collectionId = collectionJoinEntries.id;
   const { user, isAuthLoading } = useAuthContext();
   const [learnedData, setLearnedData] = useState<LearnedEntriesType>(null);
-  const [currentView, setCurrentView] = useState<Views>(Views.Remaining);
   const [entries, setEntries] = useState<UIEntry[]>([]);
-  const [counts, setCounts] = useState<Counts>({
-    total: collectionJoinEntries.entries_count[0].count,
-    remaining: 0,
-    learned: 0,
-  });
   const [exitingIds, setExitingIds] = useState<Set<number>>(new Set());
 
   const visibleEntries = useMemo(() => {
@@ -105,40 +93,29 @@ const EntriesTableContextProvider = ({
   }, [user, collectionJoinEntries.id, isAuthLoading]);
 
   useEffect(() => {
-    const builtEntries = buildEntries(
-      collectionJoinEntries,
-      learnedData,
-      exitingIds,
-    );
+    const builtEntries = buildEntries(collectionJoinEntries, learnedData);
+    // initially add all isLearnedIds to exitingIds
+    setExitingIds((prev: Set<number>) => {
+      const updatedSet = new Set(prev);
+      builtEntries.forEach((entry) => {
+        if (entry.isLearned) {
+          updatedSet.add(entry.id);
+        }
+      });
+      return updatedSet;
+    });
     setEntries(builtEntries);
+    // clear exiting Id's to trigger the delayed animation on UI
+    setTimeout(() => {
+      setExitingIds(new Set());
+    }, 500);
   }, [learnedData, collectionJoinEntries]);
 
-  return (
-    <EntriesTableContext.Provider
-      value={{
-        currentView,
-        setCurrentView,
-        entries,
-        setEntries,
-        visibleEntries,
-        toggleIsLearned,
-        counts,
-        setCounts,
-      }}
-    >
-      {children}
-    </EntriesTableContext.Provider>
-  );
+  return {
+    entries,
+    visibleEntries,
+    toggleIsLearned,
+  };
 };
 
-export const useEntriesTableContext = () => {
-  const context = useContext(EntriesTableContext);
-  if (!context) {
-    throw new Error(
-      "useEntriesTableContext must be used as child of EntriesTableContextProvider",
-    );
-  }
-  return context;
-};
-
-export default EntriesTableContextProvider;
+export default useStudyTable;
