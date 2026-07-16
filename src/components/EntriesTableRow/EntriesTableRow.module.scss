@@ -8,7 +8,6 @@
 }
 
 .isLearnedCheck {
-  color: var(--color-green);
   svg {
     stroke-width: 5;
   }
@@ -31,7 +30,8 @@
 }
 
 .answer {
-  font-style: italic;
+  color: var(--color-green-tinted);
+  font-weight: 700;
 }
 
 .concealer {
@@ -42,4 +42,13 @@
 
 .hidden {
   display: none;
+}
+
+.icon {
+  color: var(--color-blue-tinted);
+}
+
+.strike {
+  text-decoration: line-through;
+  text-decoration-thickness: 3px;
 }

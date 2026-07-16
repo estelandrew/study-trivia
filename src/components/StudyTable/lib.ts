@@ -1,4 +1,4 @@
-import { UIEntry } from "./EntriesTableContext.types";
+import { UIEntry } from "./StudyTable.types";
 import {
   CollectionJoinEntries,
   LearnedEntry,
@@ -10,7 +10,6 @@ const LEARNED_ENTRIES_KEY = "learned-entries";
 export const buildEntries = (
   collection: CollectionJoinEntries,
   learned: LearnedEntriesType | null,
-  exitingIds: Set<number>,
 ): UIEntry[] => {
   const learnedIdSet = new Set(learned?.map((l) => l.entry_id) ?? []);
   return collection.entries.map((entry) => ({
